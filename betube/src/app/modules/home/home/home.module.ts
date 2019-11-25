@@ -3,6 +3,9 @@ import { CommonModule } from "@angular/common";
 import { HomeComponent } from "./home.component";
 import { Routes, RouterModule } from "@angular/router";
 import { IndexComponent } from "../index/index.component";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+
 const homeRoutes: Routes = [
   {
     path: "",
@@ -13,7 +16,7 @@ const homeRoutes: Routes = [
 
 @NgModule({
   declarations: [HomeComponent, IndexComponent],
-  imports: [CommonModule, RouterModule.forChild(homeRoutes)],
+  imports: [CommonModule, NgbModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
 export class HomeModule {}
