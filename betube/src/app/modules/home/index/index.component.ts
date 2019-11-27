@@ -5,6 +5,7 @@ import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import * as $ from "jquery";
 //import được là nhờ install thư viện @types/slick-carousel, tham khảo tại https://hackernoon.com/how-to-use-javascript-libraries-in-angular-2-apps-ff274ba601af
 import "slick-carousel";
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: "app-index",
@@ -19,9 +20,13 @@ listSystemTheaters: any[] = [];
 listTheaters: any[] = [];
 listFilmsOfTheater: any;
 
-systemTheaterID: string;
-theaterID: string;
-
+fastBookingForm = new FormGroup({
+  sltSystem : new FormControl(''),
+  sltTheater : new FormControl(''),
+  sltFilm : new FormControl(''),
+  sltDate : new FormControl(''),
+  sltTime : new FormControl('')
+})
   constructor(
     private _homeService: HomeService,
     config: NgbCarouselConfig,
@@ -53,7 +58,11 @@ theaterID: string;
 
 
   showTheaters(systemTheaterID: string){
-    this.systemTheaterID = systemTheaterID;
+    if(this.listTheaters.length > 0){
+      this.listFilmsOfTheater = [];
+      this.fastBookingForm.controls['sltTheater'].setValue('');
+      this.fastBookingForm.controls['sltFilm'].setValue('');
+    }
     this._homeService.getListTheaters(systemTheaterID).subscribe(
       listTheaters => {
         this.listTheaters = listTheaters;
@@ -65,14 +74,20 @@ theaterID: string;
   }
 
   showFilmsOfTheater(theaterID: string){
-    this.theaterID = theaterID;
-    this._homeService.getListTheatersShowtimes(this.systemTheaterID).subscribe(
-      listFilmsOfTheater => {
-        let listTheaters: any[] = listFilmsOfTheater[0].lstCumRap;
-        this.listFilmsOfTheater = listTheaters.find(x => x.maCumRap == theaterID).danhSachPhim;
-        console.log(listFilmsOfTheater);
-        console.log(this.listFilmsOfTheater);
-        console.log(listTheaters);
+    if(this.listFilmsOfTheater){
+      this.listFilmsOfTheater = [];
+      this.fastBookingForm.controls['sltFilm'].setValue('');
+    }
+    this._homeService.getListTheatersShowtimes(this.fastBookingForm.controls['sltSystem'].value).subscribe(
+      listTheatersShowtimes => {
+        console.log(listTheatersShowtimes);
+        let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
+        let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
+        if(hasShowTime){
+          this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+        }
+        // console.log(this.listFilmsOfTheater);
+        // console.log(listTheaters);
       },
       error => {
         console.log(error.error);
@@ -91,6 +106,12 @@ theaterID: string;
   elementIdList = {
     upComing: "upComing"
   };
+
+  setHide(){
+    if(this.listTheaters.length>0){
+this.hideFilm = true;
+    }
+  }
 
   //Resize lại carousel do hiển thị lại sau khi ẩn thì width của carousel = 0px
   resize() {
