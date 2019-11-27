@@ -4,7 +4,8 @@ export const configs = {
   apiRoutes: {
     home: {
       getListFilms: "/api/QuanLyPhim/LayDanhSachPhim?MaNhom=",
-      getListTheaters: "/api/QuanLyRap/LayThongTinHeThongRap",
+      getListSystemTheaters: "/api/QuanLyRap/LayThongTinHeThongRap",
+      getListTheaters: "/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=",
       getListTheatersShowtimes:
         "/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=",
       getListShowtimes: "/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=",
@@ -34,7 +35,7 @@ export const configs = {
   },
   params: {
     filmName: "&tenPhim=",
-    theatersID: "&maHeThongRap",
-    groupID: "&MaNhom"
+    systemTheaterID: "&maHeThongRap=",
+    groupID: "&MaNhom="
   }
 };

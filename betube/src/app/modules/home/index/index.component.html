@@ -20,6 +20,63 @@
 
 <!-- Begin Content -->
 <div class="container">
+    <h4 class="mt-4 mb-3 text-center">ĐẶT VÉ NHANH</h4>
+
+    <!-- Begin Fast Booking -->
+    <div class="bg-white pt-3 rounded fast-book">
+        <div class="row px-3">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" (change)="showTheaters($event.target.value)">
+                        <option value="" disabled hidden selected>Hệ thống</option>
+                        <option *ngFor="let systemTheater of listSystemTheaters" [value]="systemTheater.maHeThongRap">
+                            {{ systemTheater.tenHeThongRap }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" (change)="showFilmsOfTheater($event.target.value)">
+                        <option value="" disabled hidden selected>Rạp</option>
+                        <option *ngFor="let theater of listTheaters" [value]="theater.maCumRap">{{ theater.tenCumRap }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" name="" id="">
+                        <option value="" disabled hidden selected>Phim</option>
+                        <option *ngFor="let film of listFilmsOfTheater" [value]="film.maPhim">{{ film.tenPhim }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" name="" id="">
+                        <option>Ngày xem</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <select class="form-control" name="" id="">
+                        <option>Suất chiếu</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="button" class="btn btn-warning w-100">ĐẶT VÉ</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Fast Booking -->
+
     <ul class="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
@@ -27,59 +84,73 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
-                aria-controls="pills-profile" aria-selected="false">Phim sắp chiếu</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab"
-                aria-controls="pills-contact" aria-selected="false">Phim hot nhất</a>
+                aria-controls="pills-profile" aria-selected="false" (click)="resize()">Phim sắp chiếu</a>
         </li>
     </ul>
+
     <div class="tab-content" id="pills-tabContent">
         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-            <div class="row">
-                <div class="col-md-3" *ngFor="let film of listFilms.slice(16,20)">
-                    <div class="film mb-3">
-                        <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
-                        <div class="film-body">
-                            <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
-                            <div class="film-rate px-3 pb-2 pt-0">
-                                <ngb-rating [rate]="film.danhGia"></ngb-rating>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ng-container *ngTemplateOutlet="SliderFilms"></ng-container>
         </div>
         <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-            <div class="row">
-                <div class="col-md-3" *ngFor="let film of listFilms.slice(4,8)">
-                    <div class="film mb-3">
-                        <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
-                        <div class="film-body">
-                            <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
-                            <div class="film-rate px-3 pb-2 pt-0">
-                                <ngb-rating [rate]="film.danhGia"></ngb-rating>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-            <div class="row">
-                <div class="col-md-3" *ngFor="let film of listFilms.slice(8,12)">
-                    <div class="film mb-3">
-                        <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
-                        <div class="film-body">
-                            <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
-                            <div class="film-rate px-3 pb-2 pt-0">
-                                <ngb-rating [rate]="film.danhGia"></ngb-rating>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <ng-container *ngTemplateOutlet="SliderFilms; context: elementIdList"></ng-container>
         </div>
     </div>
+
+    <!-- <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+            <owl-carousel [options]="{items: 5, dots: false, nav: true, slideBy: 5}" [items]="listFilms"
+                [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                <div class="item px-2" *ngFor="let film of listFilms;let i = index">
+                    <div class="film">
+                        <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
+                        <div class="film-body">
+                            <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
+                            <div class="film-rate px-3 pb-2 pt-0">
+                                <ngb-rating [rate]="film.danhGia"></ngb-rating>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </owl-carousel>
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+            <owl-carousel [options]="{items: 5, dots: false, nav: true, slideBy: 5}" [items]="listFilms"
+                [carouselClasses]="['owl-theme', 'row', 'sliding']">
+                <div class="item px-2" *ngFor="let film of listFilms;let i = index">
+                    <div class="film">
+                        <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
+                        <div class="film-body">
+                            <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
+                            <div class="film-rate px-3 pb-2 pt-0">
+                                <ngb-rating [rate]="film.danhGia"></ngb-rating>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </owl-carousel>
+        </div>
+    </div> -->
+
+
+
 </div>
 <!-- End Content -->
+
+
+<!-- Template -->
+<ng-template #SliderFilms let-id="upComing">
+    <ngx-slick-carousel id="{{ id }}" class="carousel" #slickModal="slick-carousel" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let film of listFilms" class="slide px-2">
+            <div class="film">
+                <img [src]="film.hinhAnh" alt="{{film.tenPhim}}" class="img img-fluid film-img w-100">
+                <div class="film-body">
+                    <div class="film-title px-3 pt-2 pb-0">{{film.tenPhim}}</div>
+                    <div class="film-rate px-3 pb-2 pt-0">
+                        <ngb-rating [rate]="film.danhGia"></ngb-rating>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ngx-slick-carousel>
+</ng-template>
