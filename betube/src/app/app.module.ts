@@ -4,8 +4,9 @@ import { AppComponent } from "./app.component";
 import { Routes, RouterModule } from "@angular/router";
 import { HomeModule } from "./modules/home/home/home.module";
 import { HttpClientModule } from "@angular/common/http";
+import { AccountModule } from "./modules/home/account/account.module"
 
-const appRoutes: Routes = [{ path: "", loadChildren: () => HomeModule }];
+const appRoutes: Routes = [{ path: "", loadChildren: () => HomeModule }, {path: "account", loadChildren: () => AccountModule}];
 
 @NgModule({
   declarations: [AppComponent],

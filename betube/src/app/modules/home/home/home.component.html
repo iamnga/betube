@@ -1,7 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="#"><img src="../../../../assets/home/images/Logo.png" class="img img-fluid"
-                style="max-height: 70px;"></a>
+        <a class="navbar-brand" href="#"><img id="logo" src="../../../../assets/home/images/Logo.png" class="img img-fluid"></a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -9,7 +8,7 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" routerLink="/">TRANG CHỦ</a>
+                    <a class="nav-link" routerLink="">TRANG CHỦ</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" routerLink="/">LIÊN HỆ</a>
@@ -17,8 +16,8 @@
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Nhập để tìm phim">
-                <button class="btn btn-info my-2 my-sm-0" type="submit">Đăng ký</button>
-                <button class="btn btn-warning my-2 my-sm-0 ml-2" type="submit">Đăng nhập</button>
+                <button class="btn btn-info my-2 my-sm-0" type="submit" routerLink="account/sign-up">Đăng ký</button>
+                <button class="btn btn-warning my-2 my-sm-0 ml-2" type="submit" routerLink="account/login">Đăng nhập</button>
             </form>
         </div>
     </div>

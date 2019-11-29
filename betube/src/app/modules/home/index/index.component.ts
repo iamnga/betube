@@ -5,7 +5,7 @@ import { NgbRatingConfig } from "@ng-bootstrap/ng-bootstrap";
 import * as $ from "jquery";
 //import được là nhờ install thư viện @types/slick-carousel, tham khảo tại https://hackernoon.com/how-to-use-javascript-libraries-in-angular-2-apps-ff274ba601af
 import "slick-carousel";
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-index",
@@ -13,30 +13,39 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ["./index.component.css"]
 })
 export class IndexComponent implements OnInit {
-
   // List Data
-listFilms: any[] = [];
-listSystemTheaters: any[] = [];
-listTheaters: any[] = [];
-listFilmsOfTheater: any;
+  listFilms: any[] = [];
+  listSystemTheaters: any[] = [];
+  listTheaters: any[] = [];
+  listFilmsOfTheater: any;
+  listShowTimeOfFilm: any[] = [];
+  listDate: any[] = [];
+  listTime: any[] = [];
 
-fastBookingForm = new FormGroup({
-  sltSystem : new FormControl(''),
-  sltTheater : new FormControl(''),
-  sltFilm : new FormControl(''),
-  sltDate : new FormControl(''),
-  sltTime : new FormControl('')
-})
+  //Form đặt vé nhanh
+  fastBookingForm = new FormGroup({
+    sltSystem: new FormControl(""),
+    sltTheater: new FormControl(""),
+    sltFilm: new FormControl(""),
+    sltDate: new FormControl(""),
+    sltTime: new FormControl("")
+  });
+
+  systemTheaterID: string;
+  theaterID: string;
+  isInitShowTime: boolean = true;
   constructor(
     private _homeService: HomeService,
     config: NgbCarouselConfig,
     configRating: NgbRatingConfig
   ) {
+    //Cài đặt rating
     configRating.max = 5;
     configRating.readonly = true;
   }
 
   ngOnInit() {
+    //Lấy lên danh sách film theo nhóm GP01 để show lên mục phim đang chiếu - sắp chiếu
     this._homeService.getListFilms().subscribe(
       listFilms => {
         this.listFilms = listFilms;
@@ -46,72 +55,177 @@ fastBookingForm = new FormGroup({
       }
     );
 
+    //Lấy danh sách hệ thống rạp
     this._homeService.getListSystemTheaters().subscribe(
       listSystemTheaters => {
         this.listSystemTheaters = listSystemTheaters;
+        this.showTheaters(this.listSystemTheaters[0].maHeThongRap, 1);
       },
       error => {
         console.log(error.error);
       }
     );
+
   }
 
-
-  showTheaters(systemTheaterID: string){
-    if(this.listTheaters.length > 0){
-      this.listFilmsOfTheater = [];
-      this.fastBookingForm.controls['sltTheater'].setValue('');
-      this.fastBookingForm.controls['sltFilm'].setValue('');
-    }
-    this._homeService.getListTheaters(systemTheaterID).subscribe(
-      listTheaters => {
-        this.listTheaters = listTheaters;
-      },
-      error => {
-        console.log(error.error);
+  // Lấy danh sách các cụm rạp sau khi chọn hệ thống rạp
+  showTheaters(systemTheaterID: string, type: number = 0) {
+    if (type == 0) {
+      //Reset lại select Rạp, Phim, Ngày xem, Suất chiếu nếu khách hàng đã chọn trước đó
+      if (this.listTheaters.length > 0) {
+        this.listFilmsOfTheater = [];
+        this.listDate = [];
+        this.listTime = [];
+        this.fastBookingForm.controls["sltTheater"].setValue("");
+        this.fastBookingForm.controls["sltFilm"].setValue("");
+        this.fastBookingForm.controls["sltDate"].setValue("");
+        this.fastBookingForm.controls["sltTime"].setValue("");
       }
-    );
-  }
-
-  showFilmsOfTheater(theaterID: string){
-    if(this.listFilmsOfTheater){
-      this.listFilmsOfTheater = [];
-      this.fastBookingForm.controls['sltFilm'].setValue('');
-    }
-    this._homeService.getListTheatersShowtimes(this.fastBookingForm.controls['sltSystem'].value).subscribe(
-      listTheatersShowtimes => {
-        console.log(listTheatersShowtimes);
-        let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
-        let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
-        if(hasShowTime){
-          this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+      this._homeService.getListTheaters(systemTheaterID).subscribe(
+        listTheaters => {
+          this.listTheaters = listTheaters;
+        },
+        error => {
+          console.log(error.error);
         }
-        // console.log(this.listFilmsOfTheater);
-        // console.log(listTheaters);
-      },
-      error => {
-        console.log(error.error);
+      );
+    } else {
+      if(!this.isInitShowTime){
+        this.systemTheaterID = systemTheaterID;
+        this._homeService.getListTheaters(systemTheaterID).subscribe(
+          listTheaters => {
+            this.listTheaters = listTheaters;
+          },
+          error => {
+            console.log(error.error);
+          }
+        );
       }
-    );
+      else{
+        this.isInitShowTime = false;
+        this.systemTheaterID = systemTheaterID;
+        this._homeService.getListTheaters(systemTheaterID).subscribe(
+          listTheaters => {
+            this.listTheaters = listTheaters;
+            this.showFilmsOfTheater(this.listTheaters[0].maCumRap, 1);
+          },
+          error => {
+            console.log(error.error);
+          }
+        );
+      }
+      
+    }
   }
 
+  //Lấy danh sách các phim của cụm rạp đã chọn
+  showFilmsOfTheater(theaterID: string, type: number = 0) {
+    if (type == 0) {
+      if (this.listFilmsOfTheater) {
+        this.listFilmsOfTheater = [];
+        this.listDate = [];
+        this.listTime = [];
+        this.fastBookingForm.controls["sltFilm"].setValue("");
+        this.fastBookingForm.controls["sltDate"].setValue("");
+        this.fastBookingForm.controls["sltTime"].setValue("");
+      }
+      this._homeService
+        .getListTheatersShowtimes(
+          this.fastBookingForm.controls["sltSystem"].value
+        )
+        .subscribe(
+          listTheatersShowtimes => {
+            let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
+            let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
+            if (hasShowTime) {
+              this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+            }
+          },
+          error => {
+            console.log(error.error);
+          }
+        );
+    } else {
+      if(!this.isInitShowTime){
+      this.theaterID = theaterID;
+      this._homeService
+        .getListTheatersShowtimes(this.systemTheaterID)
+        .subscribe(
+          listTheatersShowtimes => {
+            let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
+            let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
+            if (hasShowTime) {
+              this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+            }
+          },
+          error => {
+            console.log(error.error);
+          }
+        );
+      }
+      else{
+        this.isInitShowTime = false;
+      }
+    }
+  }
+
+  //Show các ngày chiếu của phim đã chọn
+  showDate(filmID: string) {
+    if (this.listDate) {
+      this.listDate = [];
+      this.listTime = [];
+      this.fastBookingForm.controls["sltDate"].setValue("");
+      this.fastBookingForm.controls["sltTime"].setValue("");
+    }
+    let listShowTimeOfFilm = this.listFilmsOfTheater.find(
+      x => x.maPhim == filmID
+    ).lstLichChieuTheoPhim;
+    let listDate = listShowTimeOfFilm.map((showtime, index) => {
+      return showtime.ngayChieuGioChieu.substring(0, 10);
+    });
+    this.listDate = [...new Set(listDate)];
+  }
+
+  //Show các suất chiếu của ngày đã chọn
+  showShowTime(date: string, type: number = 0) {
+    if (type == 0) {
+      if (this.listTime) {
+        this.listTime = [];
+        this.fastBookingForm.controls["sltTime"].setValue("");
+      }
+      let listShowTimeOfFilm = this.listFilmsOfTheater.find(
+        x => x.maPhim == this.fastBookingForm.controls["sltFilm"].value
+      ).lstLichChieuTheoPhim;
+      this.listTime = listShowTimeOfFilm.filter(
+        x => x.ngayChieuGioChieu.substring(0, 10) == date
+      );
+
+      this.listTime = this.listTime.map((x, index) => {
+        return x.ngayChieuGioChieu.substring(11, 16);
+      });
+    } else {
+      this.listShowTimeOfFilm = this.listFilmsOfTheater.find(
+        x => x.maPhim == date
+      ).lstLichChieuTheoPhim;
+      this.listShowTimeOfFilm = this.listShowTimeOfFilm.map((x, index) => {
+        return x.ngayChieuGioChieu;
+      });
+    }
+  }
+
+  //Image banner
   images = [
     "../../../../assets/home/images/banner/FrozenII.jpg",
     "../../../../assets/home/images/banner/Joker.jpg",
     "../../../../assets/home/images/banner/Endgame.jpg"
   ];
 
+  //Cài đặt Slick slider
   slideConfig = { slidesToShow: 5, slidesToScroll: 5 };
 
   elementIdList = {
     upComing: "upComing"
   };
-
-  setHide(){
-    if(this.listTheaters.length>0){
-this.hideFilm = true;
-    }
-  }
 
   //Resize lại carousel do hiển thị lại sau khi ẩn thì width của carousel = 0px
   resize() {

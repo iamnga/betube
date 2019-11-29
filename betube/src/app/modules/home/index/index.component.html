@@ -28,7 +28,8 @@
             <div class="row px-3">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select class="form-control" (change)="showTheaters($event.target.value)"  formControlName="sltSystem">
+                        <select class="form-control" (change)="showTheaters($event.target.value)"
+                            formControlName="sltSystem">
                             <option value="" hidden>Hệ thống</option>
                             <option *ngFor="let systemTheater of listSystemTheaters"
                                 [value]="systemTheater.maHeThongRap">
@@ -38,7 +39,8 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select class="form-control" (change)="showFilmsOfTheater($event.target.value)"  formControlName="sltTheater">
+                        <select class="form-control" (change)="showFilmsOfTheater($event.target.value)"
+                            formControlName="sltTheater">
                             <option value="" hidden>Rạp</option>
                             <option *ngFor="let theater of listTheaters" [value]="theater.maCumRap">
                                 {{ theater.tenCumRap }}
@@ -48,7 +50,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select class="form-control" name="" id="" formControlName="sltFilm">
+                        <select class="form-control" formControlName="sltFilm" (change)="showDate($event.target.value)">
                             <option value="" hidden>Phim</option>
                             <option *ngFor="let film of listFilmsOfTheater" [value]="film.maPhim">{{ film.tenPhim }}
                             </option>
@@ -57,19 +59,20 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select class="form-control" name="" id="">
-                            <option>Ngày xem</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control" formControlName="sltDate"
+                            (change)="showShowTime($event.target.value)">
+                            <option value="" hidden>Ngày xem</option>
+                            <option *ngFor="let date of listDate" [value]="date">{{ date }}
+                            </option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <select class="form-control" name="" id="">
-                            <option>Suất chiếu</option>
-                            <option>2</option>
-                            <option>3</option>
+                        <select class="form-control">
+                            <option value="" hidden>Suất chiếu</option>
+                            <option *ngFor="let time of listTime" [value]="time">{{ time }}
+                            </option>
                         </select>
                     </div>
                 </div>
@@ -81,6 +84,7 @@
     </div>
     <!-- End Fast Booking -->
 
+    <!-- Showing and Upcoming Film -->
     <ul class="nav nav-pills mb-3 mt-4" id="pills-tab" role="tablist">
         <li class="nav-item">
             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
@@ -100,6 +104,63 @@
             <ng-container *ngTemplateOutlet="SliderFilms; context: elementIdList"></ng-container>
         </div>
     </div>
+    <!-- End Showing and Upcoming Film -->
+
+    <!-- Showtimes -->
+    <h4 class="mt-4 mb-3 text-center">LỊCH CHIẾU</h4>
+    <!-- <div class="row bg-white py-4 border-bottom">
+        <div class="col-md-1 text-center small">
+            Hệ thống
+        </div>
+        <div class="col-md-5 text-center">
+            Rạp
+        </div>
+        <div class="col-md-3 text-center">
+            Phim
+        </div>
+        <div class="col-md-3 text-center">
+            Suất chiếu
+        </div>
+    </div> -->
+    <div class="row bg-white px-3">
+        <div class="col-md-1 pr-4 border-right">
+            <ng-container *ngFor="let system of listSystemTheaters; let last = last; let first = first">
+                <img [src]="system.logo" [alt]="system.tenHeThongRap" class="img img-fluid w-100" [ngClass]="{'mt-4': first, 'mb-4': last}"
+                    (click)="showTheaters(system.maHeThongRap, 1)">
+                    <hr *ngIf="!last">
+            </ng-container>
+
+        </div>
+        <div class="col-md-5 border-right">
+            <ng-container *ngFor="let theater of listTheaters; let last = last; let first = first">
+                <div class="theater" (click)="showFilmsOfTheater(theater.maCumRap, 1)" [ngClass]="{'mt-4': first, 'mb-4': last}">
+                    <h6 class="font-weight-bold"> {{theater.tenCumRap}}
+                    </h6>
+                    <h6>{{theater.diaChi}}</h6>
+                    <hr *ngIf="!last">
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-md-3 border-right">
+            <ng-container *ngFor="let film of listFilmsOfTheater; let last = last; let first = first">
+                <div class="theater" (click)="showShowTime(film.maPhim, 1)" [ngClass]="{'mt-4': first, 'mb-4': last}">
+                    <h6 class="font-weight-bold"> {{film.tenPhim}}
+                    </h6>
+                    <hr *ngIf="!last">
+                </div>
+            </ng-container>
+        </div>
+        <div class="col-md-3">
+            <ng-container *ngFor="let showTime of listShowTimeOfFilm; let last = last; let first = first">
+                <div class="theater" [ngClass]="{'mt-4': first, 'mb-4': last}">
+                    <h6 class="font-weight-bold"> {{showTime}}
+                    </h6>
+                    <hr *ngIf="!last">
+                </div>
+            </ng-container>
+        </div>
+    </div>
+    <!-- End Showtimes -->
 </div>
 <!-- End Content -->
 
