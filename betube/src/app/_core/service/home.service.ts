@@ -41,10 +41,12 @@ export class HomeService {
     let result: any = this._http.get(this.API_URL.getListFilms);
     return result;
   }
-  public signIn(userLogin): Observable<any[]> {
-    let header = new HttpHeaders();
-    header.append("Content-Type","application/json");
-    let result:any = this._http.post(this.API_URL.signIn,userLogin,{headers:header,responseType:'json'});
+  public signIn(userName: string, password: string) : Observable<any> {
+    //Content-Type là do phía back-end định nghĩa, bắt buộc phải khai báo đúng
+    let header = new HttpHeaders({'Content-Type':  'application/json'});
+    //Khi sử dụng post thì phải gửi kèm theo cục body, ở đây body là {taiKhoan: userName, matKhau: password} 
+    //và kèm theo header để server có thể đọc hiểu được request 
+    let result = this._http.post(this.API_URL.signIn,{taiKhoan: userName, matKhau: password},{headers:header,responseType:'json'});
     return result;
   }
   public signUp(): Observable<any[]>{

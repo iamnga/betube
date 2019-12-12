@@ -4,6 +4,8 @@ import { LoginComponent } from "./login/login.component";
 import { AccountComponent } from "./account.component";
 import { Routes, RouterModule } from "@angular/router";
 import { SignUpComponent } from './sign-up/sign-up.component';
+import { FormsModule }   from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const accRoutes: Routes = [
   {
@@ -24,6 +26,6 @@ const accRoutes: Routes = [
 
 @NgModule({
   declarations: [LoginComponent, AccountComponent, SignUpComponent],
-  imports: [CommonModule, RouterModule.forChild(accRoutes)]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(accRoutes)]
 })
 export class AccountModule {}

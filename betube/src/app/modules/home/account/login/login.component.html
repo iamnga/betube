@@ -1,19 +1,21 @@
 <div class="container text-center">
     <img id="logo" [src]="logo" alt="" class="img img-fluid mt-4" routerLink="">
     <h3 class="my-4">ĐĂNG NHẬP</h3>
+    <form [formGroup]="loginForm">
+
     <div class="login-form text-left bg-white p-4">
         <div class="form-group">
           <label for="">Tài khoản</label>
-          <input type="text"
-            class="form-control">
+          <input type="text" class="form-control"  formControlName="userName">
           <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
         </div>
         <div class="form-group">
             <label for="">Mật khẩu</label>
-            <input type="password"
-              class="form-control">
+            <input type="password" class="form-control" formControlName="password">
             <!-- <small id="helpId" class="form-text text-muted">Help text</small> -->
           </div>
-          <button type="submit" class="btn btn-info w-100">Đăng nhập</button>
+          <button type="submit" class="btn btn-info w-100" (click)="signIn()">Đăng nhập</button>
     </div>
+  </form>
+
 </div>
