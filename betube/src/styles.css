@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-* {
-    font-family: 'Nunito', sans-serif !important;
+*{
+    font-family: 'Arsenal', sans-serif;
 }
 
-body{
-    background-color: #e9ebee;
-}
+body, html {
+    height: 100%;
+  }
+

@@ -13,7 +13,9 @@ const homeRoutes: Routes = [
   {
     path: "",
     component: HomeComponent,
-    children: [{ path: "", component: IndexComponent }, { path: "about-us", component: AboutUsComponent }, { path: "contact", component: ContactComponent }]
+    children: [{ path: "", component: IndexComponent }, 
+    { path: "about-us", component: AboutUsComponent }, 
+    { path: "contact", component: ContactComponent }]
   }
 ];
 

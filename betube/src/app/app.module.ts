@@ -7,7 +7,10 @@ import { Routes, RouterModule } from "@angular/router";
 import { HomeModule } from "./modules/home/home/home.module";
 import { HttpClientModule } from "@angular/common/http";
 import { AccountModule } from "./modules/home/account/account.module";
-const appRoutes: Routes = [{ path: "", loadChildren: () => HomeModule }, {path: "account", loadChildren: () => AccountModule}];
+import { AdminModule } from "./modules/admin/admin.module";
+const appRoutes: Routes = [{ path: "", loadChildren: () => HomeModule }, 
+{path: "account", loadChildren: () => AccountModule}, 
+{path: "admin", loadChildren: () => AdminModule}];
 
 @NgModule({
   declarations: [AppComponent],

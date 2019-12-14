@@ -10,6 +10,7 @@ export class AccountComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    $("body").css("background-color", "#e9ebee");
   }
 
 }

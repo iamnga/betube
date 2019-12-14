@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm navbar-light">
     <div class="container">
-        <a class="navbar-brand" href="#"><img id="logo" src="../../../../assets/home/images/Logo.png" class="img img-fluid"></a>
+        <a class="navbar-brand" routerLink=""><img id="logo" [src]="logo" class="img img-fluid"></a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId"
             aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -8,17 +8,17 @@
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" routerLink="">TRANG CHỦ</a>
+                    <a class="nav-link font-weight-bold" routerLink="">TRANG CHỦ</a>
                 </li>
                 <li class="nav-item active">
-                    <a class="nav-link" routerLink="contact">LIÊN HỆ</a>
+                    <a class="nav-link font-weight-bold" routerLink="/contact">LIÊN HỆ</a>
                 </li>
                 
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Nhập để tìm phim">
-                <button class="btn btn-info my-2 my-sm-0" type="submit" routerLink="account/sign-up">Đăng ký</button>
-                <button class="btn btn-warning my-2 my-sm-0 ml-2" type="submit" routerLink="account/login">Đăng nhập</button>
+                <button class="btn btn-info my-2 my-sm-0" type="submit" routerLink="/account/sign-up">Đăng ký</button>
+                <button class="btn btn-warning my-2 my-sm-0 ml-2" type="submit" routerLink="/account/login">Đăng nhập</button>
             </form>
         </div>
     </div>
@@ -29,7 +29,7 @@
       <div class="row py-4">
         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
           <h6 class="text-uppercase font-weight-bold mb-4">Về chúng tôi</h6>
-          <img src="img/logo.png" alt="" width="180" class="mb-3">
+          <img [src]="logo" alt="" width="180" class="mb-3">
           <p class="font-italic text-muted">Betube chuyên cung cấp vé xem phim nhanh nhất đến cho mọi người.</p>
           <ul class="list-inline mt-4">
             <li class="list-inline-item"><a href="#" target="_blank" title="twitter"><i class="fab fa-twitter"></i></a></li>
@@ -42,7 +42,7 @@
         <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
           <h6 class="text-uppercase font-weight-bold mb-4">Betube Việt Nam</h6>
           <ul class="list-unstyled mb-0">
-            <li class="mb-2"><a href="#"  routerLink="about-us" class="text-muted">Giới Thiệu</a></li>
+            <li class="mb-2"><a href="#"  routerLink="/about-us" class="text-muted">Giới Thiệu</a></li>
             <li class="mb-2"><a href="#" class="text-muted">Tiện Ích Online</a></li>
             <li class="mb-2"><a href="#" class="text-muted">Thẻ Quà Tặng</a></li>
             <li class="mb-2"><a href="#" class="text-muted">Tuyển Dụng</a></li>
