@@ -3,7 +3,7 @@
     cursor: pointer;
 }
 
-.login-form{
+.login-form, .alert{
     max-width: 300px;
     margin: 0px auto;
     /* border-radius: 8px; */

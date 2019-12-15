@@ -1,26 +1,44 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { HomeService } from "./../../../../_core/service/home.service";
-import { UserInfo, UserLogin } from "./../../../../_core/model/master-model";
-import { configs } from "./../../../../_core/config";
+import { AdminService } from "./../../../_core/service/admin.service";
+import { UserInfo, UserLogin } from "../../../_core/model/master-model";
+import { configs } from "../../../_core/config";
+import * as $ from "jquery";
 
 @Component({
-  selector: "app-sign-up",
-  templateUrl: "./sign-up.component.html",
-  styleUrls: ["./sign-up.component.css"]
+  selector: "app-user",
+  templateUrl: "./user.component.html",
+  styleUrls: ["./user.component.css"]
 })
-export class SignUpComponent implements OnInit {
-  logo = "assets/home/images/Logo.png";
+export class UserComponent implements OnInit {
   isEqual = true; //biến check xem 2 password có giống nhau không
   userInfo = new UserInfo();
   userLogin = new UserLogin();
   error: string;
   signUpForm: any;
+  listUser: any;
 
-  constructor(private homeService: HomeService, private router: Router) {}
+  constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit() {
+    this.createForm();
+    this.adminService.getListUserPaginate(1).subscribe(
+      res => {
+        this.listUser = res;
+      },
+      error => {
+        console.log(error.error);
+      }
+    );
+  }
+
+  //Hàm này dùng để truyền tổng số trang vào, sau đó chuyển nó thành mảng với số phần tử bằng với số trang để sử dụng được *ngFor
+  counter(i: number) {
+    return new Array(i);
+  }
+
+  createForm() {
     this.signUpForm = new FormGroup({
       fullName: new FormControl("", [
         Validators.required,
@@ -56,27 +74,58 @@ export class SignUpComponent implements OnInit {
     this.userInfo.soDt = this.signUpForm.get("phoneNumber").value;
     this.userInfo.matKhau = this.signUpForm.get("password").value;
     this.userInfo.maNhom = configs.groupID;
-    this.userInfo.maLoaiNguoiDung = configs.userType.customer;
+    this.userInfo.maLoaiNguoiDung = configs.userType.admin;
     this.userInfo.email = this.signUpForm.get("email").value;
-
-    this.homeService.postSignUp(this.userInfo).subscribe(
+    let token = JSON.parse(localStorage.getItem("userAdmin"));
+    this.adminService.postAddUser(this.userInfo, token.accessToken).subscribe(
       res => {
-        this.userLogin.taiKhoan = this.userInfo.taiKhoan;
-        this.userLogin.matKhau = this.userInfo.matKhau;
-        this.homeService.postSignIn(this.userLogin).subscribe(
-          res => {
-            localStorage.setItem("user", JSON.stringify(res));
-            this.router.navigate(["/"]);
-          },
-          error => {
-            this.error = error.error;
-            console.log(error);
-          }
-        );
+        console.log(res);
       },
       error => {
         console.log(error);
-        this.error = error.error;
+      }
+    );
+  }
+
+  getPage(pageNumber: any){
+    this.adminService.getListUserPaginate(pageNumber).subscribe(
+      res => {
+        this.listUser = res;
+        console.log(this.listUser.currentPage)
+        let activeClass =  $(".active");
+        activeClass.removeClass("active");
+        console.log($("#page-"+ pageNumber));
+        $("#page-"+ pageNumber).addClass("active");      
+      },
+      error => {
+        console.log(error.error);
+      }
+    );
+  }
+
+  setActive(pageNumber: any){
+    console.log($("#page-"+ pageNumber));
+    
+  }
+
+  next() {
+    this.adminService.getListUserPaginate(this.listUser.currentPage + 1).subscribe(
+      res => {
+        this.listUser = res;
+      },
+      error => {
+        console.log(error.error);
+      }
+    );
+  }
+
+  previous(){
+    this.adminService.getListUserPaginate(this.listUser.currentPage - 1).subscribe(
+      res => {
+        this.listUser = res;
+      },
+      error => {
+        console.log(error.error);
       }
     );
   }

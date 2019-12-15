@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import * as $ from "jquery";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-admin",
@@ -7,11 +8,16 @@ import * as $ from "jquery";
   styleUrls: ["./admin.component.css"]
 })
 export class AdminComponent implements OnInit {
-  constructor() {}
+  logo = "assets/home/images/Logo.png";
+
+  constructor(private router: Router) {}
 
   ngOnInit() {
     $("body").css("background-color", "white");
   }
 
-  logo = "assets/home/images/Logo.png";
+  signOutAdmin() {
+    // localStorage.removeItem("userAdmin");
+    this.router.navigate['/admin/user'];
+  }
 }
