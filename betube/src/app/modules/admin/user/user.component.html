@@ -8,18 +8,17 @@
     <form class="form-inline float-right">
       <div class="form-group">
         <label for="searchUser">Tìm kiếm</label>
-        <input type="password" id="searchUser" class="form-control mx-sm-3">
+        <input [(ngModel)]="inputSearchUser" name="searchUser" type="text" id="searchUser" class="form-control mx-sm-3" (keyup)="searchUser()">
       </div>
     </form>
   </div>
 </div>
 <div class="table-responsive">
-  <table class="table table-striped table-bordered" *ngIf="listUser">
+  <table class="table table-striped table-bordered" *ngIf="listUser && inputSearchUser==''">
     <thead>
       <tr>
         <th>Họ tên</th>
         <th>Tài khoản</th>
-        <!-- <th>Email</th> -->
         <th>Loại</th>
         <th>Điện thoại</th>
         <th>Tùy chọn</th>
@@ -29,7 +28,6 @@
       <tr *ngFor="let user of listUser.items">
         <td>{{ user.hoTen }}</td>
         <td>{{ user.taiKhoan }}</td>
-        <!-- <td>{{ user.email }}</td> -->
         <td>{{ user.maLoaiNguoiDung }}</td>
         <td>{{ user.soDt }}</td>
         <td>
@@ -43,10 +41,41 @@
       </tr>
     </tbody>
   </table>
+  <table class="table table-striped table-bordered" *ngIf="searchResult && inputSearchUser!=''">
+    <thead>
+      <tr>
+        <th>Họ tên</th>
+        <th>Tài khoản</th>
+        <th>Loại</th>
+        <th>Điện thoại</th>
+        <th>Tùy chọn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of searchResult">
+        <td>{{ user.hoTen }}</td>
+        <td>{{ user.taiKhoan }}</td>
+        <td>{{ user.maLoaiNguoiDung }}</td>
+        <td>{{ user.soDt }}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+            <button type="button" class="btn btn-primary mr-2 btn-sm" data-toggle="modal" data-target="#myModal"
+              (click)="editUser(user.taiKhoan)"><i class="fas fa-user-edit"></i>
+              Sửa</button>
+            <button type="button" class="btn btn-danger btn-sm" (click)="setUserDelete(user.taiKhoan)" [swal]="deleteSwal"><i class="fas fa-user-times"></i> Xóa</button>
+          </div>
+        </td>
+      </tr>
+      <tr *ngIf="searchResult.length == 0">
+        <td colspan="5" class="text-center">Không tìm thấy người dùng</td>
+      </tr>
+    </tbody>
+  </table>
+
 </div>
 
 <!-- Xử lý phân trang -->
-<nav aria-label="Page navigation example">
+<nav aria-label="Page navigation example" *ngIf="listUser && inputSearchUser==''">
   <ul class="pagination justify-content-center mb-0 pb-3">
     <li class="page-item" [ngClass]="{'disabled': listUser && (listUser.currentPage == 1)}">
       <a class="page-link" href="javascript:void(0)" (click)="previous()">Trang trước</a>

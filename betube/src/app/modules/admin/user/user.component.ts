@@ -21,6 +21,8 @@ export class UserComponent implements OnInit {
   userNameDelete: any;
   formTitle: string;
   isEdit = false;
+  searchResult: any;
+  inputSearchUser = "";
   constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit() {
@@ -62,6 +64,17 @@ export class UserComponent implements OnInit {
       email: new FormControl("", [Validators.required, Validators.email]),
       userType: new FormControl("KhachHang", Validators.required)
     });
+  }
+
+  searchUser() {
+    this.adminService.getSearchUser(this.inputSearchUser).subscribe(
+      res => {
+        this.searchResult = res;
+      },
+      error => {
+        console.log(error.error);
+      }
+    );
   }
 
   addUser() {
@@ -126,7 +139,11 @@ export class UserComponent implements OnInit {
     let token = JSON.parse(localStorage.getItem("userAdmin"));
     this.adminService.putUpdateUser(this.userInfo, token.accessToken).subscribe(
       res => {
-        this.getListUserPaginate(this.listUser.currentPage);
+        if (this.inputSearchUser != "") {
+          this.searchUser();
+        } else {
+          this.getListUserPaginate(this.listUser.currentPage);
+        }
         $(".close").click();
         $("#showAlertUpdateSuccess").click();
       },
@@ -142,7 +159,11 @@ export class UserComponent implements OnInit {
       .deleteUser(this.userNameDelete, token.accessToken)
       .subscribe(
         res => {
-          this.getListUserPaginate(this.listUser.currentPage);
+          if (this.inputSearchUser != "") {
+            this.searchUser();
+          } else {
+            this.getListUserPaginate(this.listUser.currentPage);
+          }
           $("#showAlertDeleteSuccess").click();
         },
         error => {

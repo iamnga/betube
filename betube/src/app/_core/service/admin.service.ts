@@ -20,7 +20,12 @@ export class AdminService {
       configs.params.pageSetUp,
     getSearchUser: configs.domain + configs.apiRoutes.admin.user.getSearchUser,
     deleteUser: configs.domain + configs.apiRoutes.admin.user.deleteUser,
-    putUpdateUser: configs.domain + configs.apiRoutes.admin.user.putUpdateUser
+    putUpdateUser: configs.domain + configs.apiRoutes.admin.user.putUpdateUser,
+    getListFilmPaginate:
+      configs.domain +
+      configs.apiRoutes.admin.film.getListFilmPaginate +
+      configs.groupID +
+      configs.params.pageSetUp
   };
 
   responseType = "json";
@@ -71,6 +76,13 @@ export class AdminService {
       headers: this.createHeaderWithAuth(token),
       responseType: "text"
     });
+    return result;
+  }
+
+  getListFilmPaginate(pageNumber: any): Observable<any> {
+    let result: any = this._http.get(
+      this.API_URL.getListFilmPaginate + pageNumber
+    );
     return result;
   }
 
