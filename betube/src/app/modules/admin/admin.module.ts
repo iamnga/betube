@@ -5,6 +5,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { UserComponent } from "./user/user.component";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { DataTablesModule } from 'angular-datatables';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 const adminRoutes: Routes = [
   {
@@ -21,6 +22,7 @@ const adminRoutes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     DataTablesModule,
+    SweetAlert2Module,
     RouterModule.forChild(adminRoutes)
   ]
 })

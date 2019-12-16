@@ -17,7 +17,10 @@ export class AdminService {
       configs.domain +
       configs.apiRoutes.admin.user.getListUserPaginate +
       configs.groupID +
-      configs.params.pageSetUp
+      configs.params.pageSetUp,
+    getSearchUser: configs.domain + configs.apiRoutes.admin.user.getSearchUser,
+    deleteUser: configs.domain + configs.apiRoutes.admin.user.deleteUser,
+    putUpdateUser: configs.domain + configs.apiRoutes.admin.user.putUpdateUser
   };
 
   responseType = "json";
@@ -39,7 +42,35 @@ export class AdminService {
   }
 
   getListUserPaginate(pageNumber: any): Observable<any> {
-    let result: any = this._http.get(this.API_URL.getListUserPaginate + pageNumber);
+    let result: any = this._http.get(
+      this.API_URL.getListUserPaginate + pageNumber
+    );
+    return result;
+  }
+
+  getSearchUser(userName: any): Observable<any> {
+    let result: any = this._http.get(
+      this.API_URL.getSearchUser +
+        userName +
+        configs.params.groupID +
+        configs.groupID
+    );
+    return result;
+  }
+
+  deleteUser(userName: any, token: string): Observable<any> {
+    let result: any = this._http.delete(this.API_URL.deleteUser + userName, {
+      headers: this.createHeaderWithAuth(token),
+      responseType: "text"
+    });
+    return result;
+  }
+
+  putUpdateUser(userInfo: any, token: string): Observable<any> {
+    let result: any = this._http.put(this.API_URL.putUpdateUser, userInfo, {
+      headers: this.createHeaderWithAuth(token),
+      responseType: "text"
+    });
     return result;
   }
 

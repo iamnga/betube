@@ -1,6 +1,6 @@
 export const configs = {
   domain: "http://movie0706.cybersoft.edu.vn",
-  groupID: "GP01",
+  groupID: "GP10",
   userType: {
     customer: "KhachHang",
     admin: "QuanTri"
@@ -23,7 +23,7 @@ export const configs = {
     admin: {
       user: {
         postAddUser: "/api/QuanLyNguoiDung/ThemNguoiDung",
-        deleteUser: "/api/QuanLyNguoiDung/XoaNguoiDung",
+        deleteUser: "/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=",
         putUpdateUser: "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
         getSearchUser: "/api/QuanLyNguoiDung/TimKiemNguoiDung?tuKhoa=",
         getListUser: "/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=",
