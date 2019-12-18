@@ -1,14 +1,28 @@
 <h4 class="font-weight-bold mb-4">Quản lý Phim</h4>
 <div class="mb-3 row">
   <div class="col-md-2">
-    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)="setUpAddFilm()"><i
-        class="fas fa-user-plus"></i> Thêm mới</button>
+    <button
+      type="button"
+      class="btn btn-success"
+      data-toggle="modal"
+      data-target="#myModal"
+      (click)="setUpAddFilm()"
+    >
+      <i class="fas fa-user-plus"></i> Thêm mới
+    </button>
   </div>
   <div class="col-md-10 pr-0">
     <form class="form-inline float-right">
       <div class="form-group">
         <label for="searchFilm">Tìm kiếm</label>
-        <input [(ngModel)]="inputSearchFilm" name="searchFilm" type="text" id="searchFilm" class="form-control mx-sm-3" (keyup)="searchFilm()">
+        <input
+          [(ngModel)]="inputSearchFilm"
+          name="searchFilm"
+          type="text"
+          id="searchFilm"
+          class="form-control mx-sm-3"
+          (keyup)="searchFilm()"
+        />
       </div>
     </form>
   </div>
@@ -29,13 +43,32 @@
         <td>{{ film.tenPhim }}</td>
         <td>{{ film.maPhim }}</td>
         <td>{{ film.danhGia }}</td>
-        <td><a class="btn btn-info btn-sm" href="{{film.hinhAnh}}" target="_blank"><i class="fas fa-eye"></i> Xem ảnh</a></td>
+        <td>
+          <a
+            class="btn btn-info btn-sm"
+            href="{{ film.hinhAnh }}"
+            target="_blank"
+            ><i class="fas fa-eye"></i> Xem ảnh</a
+          >
+        </td>
         <td>
           <div class="d-flex justify-content-center">
-            <button type="button" class="btn btn-primary mr-2 btn-sm" data-toggle="modal" data-target="#myModal"
-              (click)="editFilm(film.maPhim)"><i class="fas fa-user-edit"></i>
-              Sửa</button>
-            <button type="button" class="btn btn-danger btn-sm" (click)="setFilmDelete(film.maPhim)"><i class="fas fa-user-times"></i> Xóa</button>
+            <button
+              type="button"
+              class="btn btn-primary mr-2 btn-sm"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="editFilm(film.maPhim)"
+            >
+              <i class="fas fa-user-edit"></i> Sửa
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="setFilmDelete(film.maPhim)"
+            >
+              <i class="fas fa-user-times"></i> Xóa
+            </button>
           </div>
         </td>
       </tr>
@@ -45,111 +78,243 @@
 
 <!-- Xử lý phân trang -->
 <nav aria-label="Page navigation example" *ngIf="listFilm">
-    <ul class="pagination justify-content-center mb-0 pb-3">
-      <li class="page-item" [ngClass]="{'disabled': listFilm && (listFilm.currentPage == 1)}">
-        <a class="page-link" href="javascript:void(0)" (click)="previous()">Trang trước</a>
+  <ul class="pagination justify-content-center mb-0 pb-3">
+    <li
+      class="page-item"
+      [ngClass]="{ disabled: listFilm && listFilm.currentPage == 1 }"
+    >
+      <a class="page-link" href="javascript:void(0)" (click)="previous()"
+        >Trang trước</a
+      >
+    </li>
+    <!-- Nếu tổng số trang <= 7 thì không cần điều chỉnh chỉ việc show ra tất cả, ở đây dùng hàm counter() để biến tổng số trang thành mảng hỗ trợ dùng ngFor -->
+    <ng-container *ngIf="listFilm && listFilm.totalPages < 8">
+      <li
+        [ngClass]="{ active: i + 1 == listFilm.currentPage }"
+        class="page-item"
+        *ngFor="let number of counter(listFilm.totalPages - 1); let i = index"
+      >
+        <a
+          class="page-link"
+          href="javascript:void(0)"
+          (click)="getPage(i + 1)"
+          >{{ i + 1 }}</a
+        >
       </li>
-      <!-- Nếu tổng số trang <= 7 thì không cần điều chỉnh chỉ việc show ra tất cả, ở đây dùng hàm counter() để biến tổng số trang thành mảng hỗ trợ dùng ngFor -->
-      <ng-container *ngIf="listFilm && listFilm.totalPages < 8">
-        <li [ngClass]="{'active': (i + 1) == listFilm.currentPage}" class="page-item"
-          *ngFor="let number of counter(listFilm.totalPages); let i = index">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(i + 1)">{{ i + 1 }}</a>
-        </li>
-      </ng-container>
-  
-      <!-- Nếu số trang lớn hơn 7 và trang hiện tại nhỏ hơn 5 thì lúc này phân trang có dạng 1,2,3,4,5,...,tổng -->
-      <ng-container *ngIf="listFilm && listFilm.totalPages > 7 && listFilm.currentPage < 5">
-        <li class="page-item" [ngClass]="{'active': (i + 1) == listFilm.currentPage}"
-          *ngFor="let number of counter(5); let i = index">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(i + 1)">{{ i + 1 }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)">...</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages)">{{
-            listFilm.totalPages
-          }}</a>
-        </li>
-      </ng-container>
-  
-      <!-- Nếu số trang lớn hơn 7 và trang hiện tại đang >=5 và < tổng - 3 lúc này phân trang sẽ có dạng 1,...,hiện tại - 1, hiện tại, hiện tại + 1,..., tổng -->
-      <ng-container *ngIf="
-      listFilm &&
-      listFilm.totalPages > 7 &&
-      listFilm.currentPage > 4 &&
-      listFilm.currentPage < listFilm.totalPages - 3
-        ">
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(1)">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)">...</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.currentPage - 1)">{{
-            listFilm.currentPage - 1
-          }}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.currentPage == listFilm.currentPage}">
-          <a class="page-link" href="javascript:void(0)">{{ listFilm.currentPage }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.currentPage + 1)">{{
-            listFilm.currentPage + 1
-          }}</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)">...</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages)">{{
-            listFilm.totalPages
-          }}</a>
-        </li>
-      </ng-container>
-  
-      <!-- Nếu số trang lớn hơn 7 và trang hiện tại > tổng - 4 thì lúc này phân trang sẽ có dạng 1, ..., tổng - 4 -> tổng -->
-      <ng-container *ngIf="
-      listFilm &&
-      listFilm.totalPages > 7 &&
-      listFilm.currentPage > listFilm.totalPages - 4
-        ">
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(1)">1</a>
-        </li>
-        <li class="page-item">
-          <a class="page-link" href="javascript:void(0)">...</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.currentPage == listFilm.totalPages - 4}">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages - 4)">{{
-            listFilm.totalPages - 4
-          }}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.currentPage == listFilm.totalPages - 3}">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages - 3)">{{
-            listFilm.totalPages - 3
-          }}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.currentPage == listFilm.totalPages - 2}">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages - 2)">{{
-            listFilm.totalPages - 2
-          }}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.currentPage == listFilm.totalPages - 1}">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages - 1)">{{
-            listFilm.totalPages - 1
-          }}</a>
-        </li>
-        <li class="page-item" [ngClass]="{'active': listFilm.totalPages == listFilm.currentPage}">
-          <a class="page-link" href="javascript:void(0)" (click)="getPage(listFilm.totalPages)">{{
-            listFilm.totalPages
-          }}</a>
-        </li>
-      </ng-container>
-      <li class="page-item" [ngClass]="{'disabled': listFilm && (listFilm.currentPage == listFilm.totalPages)}">
-        <a class="page-link" href="javascript:void(0)" (click)="next()">Trang sau</a>
-      </li>
-    </ul>
-  </nav>
-  <!-- End Xử lý phân trang -->
+    </ng-container>
+
+    <li
+      class="page-item"
+      [ngClass]="{
+        disabled: listFilm && listFilm.currentPage == listFilm.totalPages - 1
+      }"
+    >
+      <a class="page-link" href="javascript:void(0)" (click)="next()"
+        >Trang sau</a
+      >
+    </li>
+  </ul>
+</nav>
+<!-- End Xử lý phân trang -->
+
+<!-- Modal form thêm mới và sửa thông tin người dùng -->
+<div
+  id="myModal"
+  class="modal fade bd-example-modal-lg"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myLargeModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title font-weight-bold" id="exampleModalLabel">
+          {{ formTitle }}
+        </h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger mb-3" role="alert" *ngIf="error">
+          {{ error }}
+        </div>
+        <div class="sign-up-form text-left bg-white">
+          <form [formGroup]="addFilmForm">
+            <div class="form-group">
+              <label for="">Mã phim</label>
+              <!-- Nếu class 'is-invalid' được sử dụng thì class 'invalid-feedback' cũng sẽ hiển thị theo, phần này bootstrap đã hỗ trợ sẵn -->
+              <input
+                type="text"
+                class="form-control"
+                formControlName="filmID"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('filmID').touched ||
+                      addFilmForm.get('filmID').dirty) &&
+                    addFilmForm.get('filmID').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Mã phim không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Tên phim</label>
+              <input
+                [readonly]="isEdit"
+                type="text"
+                class="form-control"
+                formControlName="filmName"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('filmName').touched ||
+                      addFilmForm.get('filmName').dirty) &&
+                    addFilmForm.get('filmName').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Tên phim không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Bí danh</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="slugFilm"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('slugFilm').touched ||
+                      addFilmForm.get('slugFilm').dirty) &&
+                    addFilmForm.get('slugFilm').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Bí danh không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Trailer</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="trailer"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('trailer').touched ||
+                      addFilmForm.get('trailer').dirty) &&
+                    addFilmForm.get('trailer').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Trailer không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Hình ảnh</label>
+              <input
+              (change)="onFileSelect($event)"
+                type="file"
+                class="form-control"
+                formControlName="imgFilm"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('imgFilm').touched ||
+                      addFilmForm.get('imgFilm').dirty) &&
+                      addFilmForm.get('imgFilm').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Hình ảnh không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Mô tả</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="description"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('description').touched ||
+                      addFilmForm.get('description').dirty) &&
+                    addFilmForm.get('description').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Mô tả không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Ngày khởi chiếu</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="premiereDate"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('premiereDate').touched ||
+                      addFilmForm.get('premiereDate').dirty) &&
+                    addFilmForm.get('premiereDate').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Ngày khởi chiếu không hợp lệ
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="">Đánh giá</label>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="rate"
+                [ngClass]="{
+                  'is-invalid':
+                    (addFilmForm.get('rate').touched ||
+                      addFilmForm.get('rate').dirty) &&
+                    addFilmForm.get('rate').invalid
+                }"
+              />
+              <div class="invalid-feedback">
+                Đánh giá không hợp lệ
+              </div>
+            </div>
+
+            <!-- Nếu các field của Form không hợp lệ thì disable nút Lưu thông tin đi -->
+            <button
+              *ngIf="!isEdit"
+              type="submit"
+              [disabled]="addFilmForm.invalid"
+              class="btn btn-success w-100"
+              (click)="addFilm()"
+            >
+              Lưu thông tin
+            </button>
+            <button
+              *ngIf="isEdit"
+              type="submit"
+              [disabled]="addFilmForm.invalid"
+              class="btn btn-success w-100"
+              (click)="confirmEdit()"
+            >
+              Lưu thông tin
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Modal form thêm mới và sửa thông tin người dùng -->
+
+
+<!-- Hiển thị thông báo sau khi thêm người dùng thành công -->
+<button id="showAlertAddSuccess" class="d-none" [swal]="['Thật tuyệt vời!', 'Bạn đã thêm thành công người dùng mới', 'success']">
+</button>

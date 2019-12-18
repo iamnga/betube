@@ -25,7 +25,10 @@ export class AdminService {
       configs.domain +
       configs.apiRoutes.admin.film.getListFilmPaginate +
       configs.groupID +
-      configs.params.pageSetUp
+      configs.params.pageSetUp,
+    postAddFilm: configs.domain + configs.apiRoutes.admin.film.postAddFilm,
+    postUploadImgFilm:
+      configs.domain + configs.apiRoutes.admin.film.postUploadImgFilm
   };
 
   responseType = "json";
@@ -86,9 +89,30 @@ export class AdminService {
     return result;
   }
 
+  postAddFilm(film: any, token: string): Observable<any> {
+    let result = this._http.post(this.API_URL.postAddFilm, film, {
+      headers: this.createHeaderWithAuth(token),
+      responseType: "json"
+    });
+    return result;
+  }
+
+  postUploadImgFilm(data: any, token: string): Observable<any> {
+    let result = this._http.post(this.API_URL.postAddFilm, data, {
+      headers: this.createHeaderWithAuthNotContentType(token)
+    });
+    return result;
+  }
+
   createHeaderWithAuth(token: string): HttpHeaders {
     return new HttpHeaders({
       "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+  }
+
+  createHeaderWithAuthNotContentType(token: string): HttpHeaders {
+    return new HttpHeaders({
       Authorization: "Bearer " + token
     });
   }
