@@ -28,7 +28,8 @@ export class AdminService {
       configs.params.pageSetUp,
     postAddFilm: configs.domain + configs.apiRoutes.admin.film.postAddFilm,
     postUploadImgFilm:
-      configs.domain + configs.apiRoutes.admin.film.postUploadImgFilm
+      configs.domain + configs.apiRoutes.admin.film.postUploadImgFilm,
+      deleteFilm: configs.domain + configs.apiRoutes.admin.film.deleteFilm
   };
 
   responseType = "json";
@@ -100,6 +101,14 @@ export class AdminService {
   postUploadImgFilm(data: any, token: string): Observable<any> {
     let result = this._http.post(this.API_URL.postAddFilm, data, {
       headers: this.createHeaderWithAuthNotContentType(token)
+    });
+    return result;
+  }
+
+  deleteFilm(filmID: any, token: string): Observable<any> {
+    let result: any = this._http.delete(this.API_URL.deleteFilm + filmID, {
+      headers: this.createHeaderWithAuth(token),
+      responseType: "text"
     });
     return result;
   }

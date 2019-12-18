@@ -66,6 +66,7 @@
               type="button"
               class="btn btn-danger btn-sm"
               (click)="setFilmDelete(film.maPhim)"
+              [swal]="deleteSwal"
             >
               <i class="fas fa-user-times"></i> Xóa
             </button>
@@ -92,7 +93,7 @@
       <li
         [ngClass]="{ active: i + 1 == listFilm.currentPage }"
         class="page-item"
-        *ngFor="let number of counter(listFilm.totalPages - 1); let i = index"
+        *ngFor="let number of counter(listFilm.totalPages); let i = index"
       >
         <a
           class="page-link"
@@ -106,7 +107,7 @@
     <li
       class="page-item"
       [ngClass]="{
-        disabled: listFilm && listFilm.currentPage == listFilm.totalPages - 1
+        disabled: listFilm && listFilm.currentPage == listFilm.totalPages
       }"
     >
       <a class="page-link" href="javascript:void(0)" (click)="next()"
@@ -220,7 +221,7 @@
             <div class="form-group">
               <label for="">Hình ảnh</label>
               <input
-              (change)="onFileSelect($event)"
+                (change)="onFileSelect($event)"
                 type="file"
                 class="form-control"
                 formControlName="imgFilm"
@@ -228,7 +229,7 @@
                   'is-invalid':
                     (addFilmForm.get('imgFilm').touched ||
                       addFilmForm.get('imgFilm').dirty) &&
-                      addFilmForm.get('imgFilm').invalid
+                    addFilmForm.get('imgFilm').invalid
                 }"
               />
               <div class="invalid-feedback">
@@ -314,7 +315,32 @@
 </div>
 <!-- End Modal form thêm mới và sửa thông tin người dùng -->
 
+<swal
+  #deleteSwal
+  title="Xóa phim"
+  text="Bạn có chắc muốn xóa phim này không?"
+  icon="question"
+  cancelButtonText="Hủy"
+  [showCancelButton]="true"
+  [focusCancel]="true"
+  (confirm)="deleteFilm()"
+>
+</swal>
 
 <!-- Hiển thị thông báo sau khi thêm người dùng thành công -->
-<button id="showAlertAddSuccess" class="d-none" [swal]="['Thật tuyệt vời!', 'Bạn đã thêm thành công người dùng mới', 'success']">
-</button>
+<button
+  id="showAlertAddSuccess"
+  class="d-none"
+  [swal]="[
+    'Thật tuyệt vời!',
+    'Bạn đã thêm thành công người dùng mới',
+    'success'
+  ]"
+></button>
+
+<!-- Hiển thị thông báo sau khi xóa người dùng thành công -->
+<button
+  id="showAlertDeleteSuccess"
+  class="d-none"
+  [swal]="['Thật tuyệt vời!', 'Bạn đã xóa người dùng thành công', 'success']"
+></button>

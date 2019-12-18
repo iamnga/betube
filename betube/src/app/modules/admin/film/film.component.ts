@@ -18,6 +18,7 @@ export class FilmComponent implements OnInit {
   formTitle: string;
   isEdit = false;
   error: string;
+  filmIdDelete: string;
 
   constructor(private adminService: AdminService, private router: Router) {}
 
@@ -107,7 +108,7 @@ export class FilmComponent implements OnInit {
     this.film.tenPhim = this.addFilmForm.get("filmName").value;
     this.film.biDanh = this.addFilmForm.get("slugFilm").value;
     this.film.trailer = this.addFilmForm.get("trailer").value;
-    this.film.hinhAnh = this.film.tenPhim +".jpg";
+    this.film.hinhAnh = this.film.tenPhim + ".jpg";
     this.film.moTa = this.addFilmForm.get("description").value;
     this.film.ngayKhoiChieu = this.addFilmForm.get("premiereDate").value;
     this.film.danhGia = this.addFilmForm.get("rate").value;
@@ -124,18 +125,20 @@ export class FilmComponent implements OnInit {
           this.film.tenPhim + "gr10.jpg"
         );
         frmData.append("tenphim", this.film.tenPhim);
-        this.adminService.postUploadImgFilm(frmData, token.accessToken).subscribe(
-          res => {
-            console.log(res);
-            this.getListFilmPaginate(this.listFilm.currentPage);
-            $(".close").click();
-            $("#showAlertAddSuccess").click();
-          },
-          error => {
-            console.log(error);
-            this.error = error.error;
-          }
-        );
+        this.adminService
+          .postUploadImgFilm(frmData, token.accessToken)
+          .subscribe(
+            res => {
+              console.log(res);
+              this.getListFilmPaginate(this.listFilm.currentPage);
+              $(".close").click();
+              $("#showAlertAddSuccess").click();
+            },
+            error => {
+              console.log(error);
+              this.error = error.error;
+            }
+          );
       },
       error => {
         this.error = error.error;
@@ -149,5 +152,28 @@ export class FilmComponent implements OnInit {
       const file = event.target.files[0];
       this.addFilmForm.get("imgFilm").setValue(file);
     }
+  }
+
+  setFilmDelete(filmID: string) {
+    this.filmIdDelete = filmID;
+  }
+
+  deleteFilm() {
+    let token = JSON.parse(localStorage.getItem("userAdmin"));
+    this.adminService
+      .deleteFilm(this.filmIdDelete, token.accessToken)
+      .subscribe(
+        res => {
+          // if (this.inputSearchUser != "") {
+          //   this.searchUser();
+          // } else {
+            this.getListFilmPaginate(this.listFilm.currentPage);
+          // }
+          $("#showAlertDeleteSuccess").click();
+        },
+        error => {
+          console.log(error.error);
+        }
+      );
   }
 }
