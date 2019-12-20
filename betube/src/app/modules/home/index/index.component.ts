@@ -1,3 +1,4 @@
+import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from "@angular/core";
 import { HomeService } from "../../../_core/service/home.service";
 import { NgbCarouselConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -13,6 +14,7 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ["./index.component.css"]
 })
 export class IndexComponent implements OnInit {
+  
   // List Data
   listFilms: any[] = [];
   listSystemTheaters: any[] = [];
@@ -37,8 +39,11 @@ export class IndexComponent implements OnInit {
   constructor(
     private _homeService: HomeService,
     config: NgbCarouselConfig,
-    configRating: NgbRatingConfig
+    configRating: NgbRatingConfig,
+    private titleService:Title
+
   ) {
+    this.titleService.setTitle("Be tube - Đặt vé phim nhanh nhất");
     //Cài đặt rating
     configRating.max = 5;
     configRating.readonly = true;

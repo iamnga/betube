@@ -1,3 +1,4 @@
+import { UtilityComponent } from '../utility/utility.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HomeComponent } from "./home.component";
@@ -15,12 +16,14 @@ const homeRoutes: Routes = [
     component: HomeComponent,
     children: [{ path: "", component: IndexComponent }, 
     { path: "about-us", component: AboutUsComponent }, 
-    { path: "contact", component: ContactComponent }]
+    { path: "contact", component: ContactComponent },
+    { path: "utility", component: UtilityComponent},
+              ]
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent],
+  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent],
   imports: [CommonModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
