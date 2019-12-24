@@ -1,6 +1,11 @@
 <div class="container">
     <h1>Hi {{user.hoTen}}!</h1>
-    <li *ngFor="let user of user">
-        {{user.taiKhoan}} ({{user.soDt}} {{user.email}})
+    <p>Chào Mừng bạn đến với Betube</p>
+    <li *ngFor="let user of listUser.items">
+        {{user.taiKhoan}}<br/>
+        {{user.hoTen}}<br/>
+        <br/> {{user.sodt}}
+         
+        <br/>{{user.email}}
     </li>
 </div>

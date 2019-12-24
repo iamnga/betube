@@ -10,15 +10,12 @@ export class HomeService {
   API_URL = {
     getListFilms:
       configs.domain + configs.apiRoutes.home.getListFilms + configs.groupID,
-    getListSystemTheaters:
-      configs.domain + configs.apiRoutes.home.getListSystemTheaters,
+    getListSystemTheaters: configs.domain + configs.apiRoutes.home.getListSystemTheaters,
     getListTheaters: configs.domain + configs.apiRoutes.home.getListTheaters,
-    getListTheatersShowtimes:
-      configs.domain +
-      configs.apiRoutes.home.getListTheatersShowtimes +
-      configs.groupID,
+    getListTheatersShowtimes: configs.domain + configs.apiRoutes.home.getListTheatersShowtimes + configs.groupID,
     postSignIn: configs.domain + configs.apiRoutes.home.postSignIn,
-    postSignUp: configs.domain + configs.apiRoutes.home.postSignUp
+    postSignUp: configs.domain + configs.apiRoutes.home.postSignUp,
+    postCustomerInfo: configs.domain + configs.apiRoutes.home.postCustomerInfo,
   };
 
   constructor(private _http: HttpClient) {}
@@ -67,5 +64,10 @@ export class HomeService {
       responseType: "json"
     });
     return result;
+  }
+  public postCustomerInfo(userInfo: any): Observable<any[]>{
+    let result: any = this._http.get(this.API_URL.postCustomerInfo);
+    return result;
+
   }
 }

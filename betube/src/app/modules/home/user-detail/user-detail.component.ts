@@ -1,3 +1,4 @@
+import { HomeService } from './../../../_core/service/home.service';
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
 @Component({
@@ -7,7 +8,7 @@ import * as $ from "jquery";
 })
 export class UserDetailComponent implements OnInit {
   user : any;
-  constructor() { }
+  constructor( private userService: HomeService) { }
 
   ngOnInit() {
     this.user = localStorage.getItem('user');

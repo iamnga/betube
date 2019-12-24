@@ -26,9 +26,9 @@
             </button>
             <div class="dropdown-menu">
               <a class="dropdown-item" href="#">Lịch sử đặt vé</a>
-              <a class="dropdown-item" href="#" routerLink="/user-detail/{{user.taiKhoan}}">Thông tin tài khoản</a>
+              <a class="dropdown-item" routerLink="/user-detail/{{user.taiKhoan}}">Thông tin tài khoản</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logOut()" id="log-out">Đăng xuất</a>
+              <a class="dropdown-item"  routerLink="" (click)="logOut()" id="log-out">Đăng xuất</a>
             </div>
           </div>
         </ng-container>
