@@ -1,0 +1,6 @@
+<div class="container">
+    <h1>Hi {{user.hoTen}}!</h1>
+    <li *ngFor="let user of user">
+        {{user.taiKhoan}} ({{user.soDt}} {{user.email}})
+    </li>
+</div>

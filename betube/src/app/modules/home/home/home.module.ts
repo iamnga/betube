@@ -1,3 +1,4 @@
+import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { DetailComponent } from '../detail/detail.component';
 import { UtilityComponent } from '../utility/utility.component';
 import { NgModule } from "@angular/core";
@@ -19,13 +20,13 @@ const homeRoutes: Routes = [
     { path: "about-us", component: AboutUsComponent }, 
     { path: "contact", component: ContactComponent },
     { path: "utility", component: UtilityComponent},
-    { path: "detail/:id", component: DetailComponent}
-              ]
+    { path: "detail/:id", component: DetailComponent},
+    { path: "user-detail/:taiKhoan", component: UserDetailComponent}]
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent,DetailComponent],
+  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent],
   imports: [CommonModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
