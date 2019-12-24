@@ -1,3 +1,4 @@
+import { DetailComponent } from '../detail/detail.component';
 import { UtilityComponent } from '../utility/utility.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -18,12 +19,13 @@ const homeRoutes: Routes = [
     { path: "about-us", component: AboutUsComponent }, 
     { path: "contact", component: ContactComponent },
     { path: "utility", component: UtilityComponent},
+    { path: "detail/:id", component: DetailComponent}
               ]
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent],
+  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent,DetailComponent],
   imports: [CommonModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
