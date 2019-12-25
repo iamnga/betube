@@ -1,4 +1,4 @@
-import { SignUpComponent } from "./../../modules/home/account/sign-up/sign-up.component";
+
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
@@ -55,6 +55,7 @@ export class HomeService {
       headers: header,
       responseType: "json"
     });
+    console.log(result);
     return result;
   }
   public postSignUp(userInfo: any): Observable<any[]> {
@@ -63,11 +64,9 @@ export class HomeService {
       headers: header,
       responseType: "json"
     });
+    
     return result;
   }
-  public postCustomerInfo(userInfo: any): Observable<any[]>{
-    let result: any = this._http.get(this.API_URL.postCustomerInfo);
-    return result;
 
-  }
+  
 }
