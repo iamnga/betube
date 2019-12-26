@@ -18,6 +18,5 @@ export class UserDetailComponent implements OnInit {
   ngOnInit() {
     this.user = localStorage.getItem('user');
     this.user = JSON.parse(this.user)
-    
   }
 }
