@@ -20,7 +20,7 @@ const homeRoutes: Routes = [
     { path: "about-us", component: AboutUsComponent }, 
     { path: "contact", component: ContactComponent },
     { path: "utility", component: UtilityComponent},
-    { path: "detail/:id", component: DetailComponent},
+    { path: "detail/:maphim", component: DetailComponent},
     { path: "user-detail/:taiKhoan", component: UserDetailComponent}]
   }
 ];
