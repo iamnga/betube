@@ -1,4 +1,6 @@
 <div class="container">
     <p>{{detailFilm.tenPhim}}</p>
- <iframe [src]="trailerFilm | safe" frameborder="0"></iframe>
+    <img [src]="detailFilm.hinhAnh" alt="">
+    <iframe width="560" height="315" [src]="TrailerChiTiet | safe"   allow=" autoplay;" allowfullscreen></iframe>
+ 
 </div>

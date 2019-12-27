@@ -9,7 +9,7 @@ export class SafePipe implements PipeTransform {
     
   }
   transform(value: any): any {
-    return this.sanz.bypassSecurityTrustUrl(value);
+    return this.sanz.bypassSecurityTrustResourceUrl(value);
   }
 
 }
