@@ -68,11 +68,21 @@ export class HomeService {
     
     return result;
   }
-  public  getInfoFilm(fimlID: string): Observable<any> {
-    let result: any = this._http.get(
-      this.API_URL. getInfoFilm + fimlID
+
+  public getInfoFilm(fimlID: string): Observable<any> {
+    let result: any = this._http.get( this.API_URL.getInfoFilm + fimlID
     );
+    console.log(fimlID);
+    console.log(result);
+    return result;
+    
+  }
+  public  postCustomerInfo(taiKhoan: string): Observable<any[]>{
+    let header = new HttpHeaders({ "Content-Type": "application/json" });
+    let result: any = this._http.post(this.API_URL.postCustomerInfo, taiKhoan, {
+      headers: header,
+      responseType: "json"
+    });
     return result;
   }
-  
 }

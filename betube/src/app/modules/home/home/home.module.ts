@@ -1,3 +1,4 @@
+import { PipeModule } from './../../../_core/pipe/pipe.module';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { DetailComponent } from '../detail/detail.component';
 import { UtilityComponent } from '../utility/utility.component';
@@ -27,7 +28,7 @@ const homeRoutes: Routes = [
 
 @NgModule({
   declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent],
-  imports: [CommonModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
+  imports: [CommonModule, PipeModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
 export class HomeModule {}

@@ -9,7 +9,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailComponent implements OnInit {
   public maPhim: string;
-  public detailPhim: any;
+  public detailFilm: any;
+  public trailerFilm: string;
   constructor(private actived:ActivatedRoute, private _homeService:HomeService) { }
 
   ngOnInit() {
@@ -17,9 +18,15 @@ export class DetailComponent implements OnInit {
       (result) =>{
         this.maPhim = result.maphim;
         this._homeService.getInfoFilm(this.maPhim).subscribe(
-          (detailFilm) =>{
-            this.detailPhim = detailFilm;
-            console.log(detailFilm);
+          (DetailFilm) =>{
+            this.detailFilm = DetailFilm;
+            console.log(DetailFilm);
+            let trailer = this.detailFilm.Trailer;
+            console.log(trailer);
+            trailer = trailer.split('watch?v=');
+            console.log(trailer);
+            this.trailerFilm = trailer[0]+"embed/"+trailer[1];
+            console.log(trailer);
           }
         )
       }
