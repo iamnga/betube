@@ -18,7 +18,8 @@ export const configs = {
       postSignUp: "/api/QuanLyNguoiDung/DangKy",
       postSignIn: "/api/QuanLyNguoiDung/DangNhap",
       postCustomerInfo: "/api/QuanLyNguoiDung/ThongTinTaiKhoan",
-      putUpdateCustomerInfo: "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung"
+      putUpdateCustomerInfo: "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
+      getInfoFilm: "/api/QuanLyPhim/LayThongTinPhim?MaPhim="
     },
     admin: {
       user: {
@@ -42,6 +43,7 @@ export const configs = {
     }
   },
   params: {
+    filmID: "&MaPhim=",
     filmName: "&tenPhim=",
     systemTheaterID: "&maHeThongRap=",
     groupID: "&MaNhom=",

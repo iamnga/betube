@@ -1,7 +1,7 @@
 
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { Observable, config } from "rxjs";
 import { configs } from "../config";
 @Injectable({
   providedIn: "root"
@@ -16,6 +16,7 @@ export class HomeService {
     postSignIn: configs.domain + configs.apiRoutes.home.postSignIn,
     postSignUp: configs.domain + configs.apiRoutes.home.postSignUp,
     postCustomerInfo: configs.domain + configs.apiRoutes.home.postCustomerInfo,
+    getInfoFilm: configs.domain + configs.apiRoutes.home.getInfoFilm, 
   };
 
   constructor(private _http: HttpClient) {}
@@ -67,6 +68,11 @@ export class HomeService {
     
     return result;
   }
-
+  public  getInfoFilm(fimlID: string): Observable<any> {
+    let result: any = this._http.get(
+      this.API_URL. getInfoFilm + fimlID
+    );
+    return result;
+  }
   
 }
