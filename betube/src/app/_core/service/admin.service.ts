@@ -40,8 +40,12 @@ export class AdminService {
   postAddUser(userInfo: any, token: string): Observable<any> {
     let result = this._http.post(this.API_URL.postAddUser, userInfo, {
       headers: this.createHeaderWithAuth(token),
+      
+      
       responseType: "json"
     });
+    console.log(token);
+    console.log(result);
     return result;
   }
 

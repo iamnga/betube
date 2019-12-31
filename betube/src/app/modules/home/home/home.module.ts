@@ -1,3 +1,4 @@
+import { TicketComponent } from './../ticket/ticket.component';
 import { PipeModule } from './../../../_core/pipe/pipe.module';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
 import { DetailComponent } from '../detail/detail.component';
@@ -22,12 +23,13 @@ const homeRoutes: Routes = [
     { path: "contact", component: ContactComponent },
     { path: "utility", component: UtilityComponent},
     { path: "detail/:maphim", component: DetailComponent},
+    { path: "ticket/:malichchieu", component: TicketComponent},
     { path: "user-detail/:taiKhoan", component: UserDetailComponent}]
   }
 ];
 
 @NgModule({
-  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent],
+  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent, TicketComponent],
   imports: [CommonModule, PipeModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })

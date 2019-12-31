@@ -12,6 +12,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 
+
 const appRoutes: Routes = [{ path: "", loadChildren: () => HomeModule }, 
 {path: "account", loadChildren: () => AccountModule}, 
 {path: "admin", loadChildren: () => AdminModule}];

@@ -38,28 +38,12 @@
             <div class="col-sm-4 col-sm-push-1">
                 <h2>Viewing times</h2>
                 <ul class="show-times">
-                    <li><i>Monday</i> <span class="time past">13:00</span> <span
-                            class="time">16:00</span> <span class="time">19:30</span>
-                        <span class="time">22:00</span></li>
-                    <li><i>Tuesday</i> <span class="time past">13:00</span>
-                        <span class="time">15:30</span> <span class="time">19:30</span>
-                        <span class="time">22:00</span></li>
-                    <li class="today"><i>Today</i> <span class="time past">12:00</span>
-                        <span class="time">16:00</span> <span class="time">19:30</span>
-                        <span class="time">22:00</span></li>
-                    <li><i>Thursday</i> <span class="time past">13:00</span>
-                        <span class="time">16:00</span> <span class="time">20:15</span>
-                        <span class="time">22:00</span></li>
-                    <li><i>Friday</i> <span class="time past">13:00</span> <span
-                            class="time">14:45</span> <span class="time">19:30</span>
-                        <span class="time">22:00</span></li>
-                    <li><i>Saturday</i> <span class="time past">14:15</span>
-                        <span class="time">16:00</span> <span class="time">19:30</span>
-                        <span class="time">22:00</span></li>
-                    <li><i>Sunday</i> <span class="time past">13:00</span> <span
-                            class="time">16:00</span> <span class="time">19:30</span>
-                        <span class="time">22:20</span></li>
+                   
+                    <li *ngFor="let lichchieu of detailFilm.lichChieu"><i> {{lichchieu.ngayChieuGioChieu | date :'dd/MM'}}</i><a [routerLink]="['/ticket', lichchieu.maLichChieu]"><span class="time past">{{lichchieu.ngayChieuGioChieu | date :'hh:mm'}}</span></a></li>
+                   
                 </ul>
+                
+                    
             </div>
         </div>
     </div> 
