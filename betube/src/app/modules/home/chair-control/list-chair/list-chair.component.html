@@ -1,1 +1,14 @@
-<p>list-chair works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-4 mx-auto bg-info p-4">
+            <app-chair *ngFor="let ghe of danhSachGhe" [itemGhe]="ghe" (emitStatus)="DatGheParent($event, ghe)"></app-chair>
+            <p *ngFor="let ghe of danhSachGheDangDat">
+                <span>Tên ghế:{{ghe.tenGhe}} </span>
+                <span>Giá: {{ghe.Gia}}</span>
+            </p>
+            <p>Số ghế đã đạt: {{soGheDaDat}}</p>
+            <p>Số ghế còn lại: {{soGheConLai}}</p>
+        </div>
+    </div>
+</div>
+

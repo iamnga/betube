@@ -1,1 +1,13 @@
-<p>edit-list-chair works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-4">
+            <label for="Thêm ghế"></label>
+            <input type="text" class="form-control" #ten placeholder="Tên Ghế">
+            <input type="text" class="form-control" #soGhe placeholder="Số ghế">
+            <input type="text" class="form-control" #gia placeholder="Giá">
+            <input type="text" class="form-control" #trangThai placeholder="Trang Thai">
+            <button class="btn btn-primary" (click)="themGheParent(ten.value,soGhe.value,gia.value,trangThai.value"></button>
+        </div>
+    </div>
+</div>
+<app--list-chair></app--list-chair>

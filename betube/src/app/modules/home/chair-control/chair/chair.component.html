@@ -1,1 +1,7 @@
-<p>chair works!</p>
+
+<ng-container *ngIf="!itemGhe.trangThai;else gheDaDuocChon">
+    <button class="btn mr-2 mb-2"[ngClass]="{'btn-success':status}" (click)="datGhe()">{{itemGhe.soGhe}}</button>
+</ng-container>
+<ng-template>
+    <button class="btn btn-danger mr-2 mb-2 disable" style="cursor: not-allowed">{{itemGhe.soGhe}}</button>
+</ng-template>

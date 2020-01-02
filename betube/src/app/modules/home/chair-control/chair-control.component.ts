@@ -11,5 +11,5 @@ export class ChairControlComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  
 }
