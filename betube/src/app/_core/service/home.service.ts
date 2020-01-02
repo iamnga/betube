@@ -17,6 +17,7 @@ export class HomeService {
     postSignUp: configs.domain + configs.apiRoutes.home.postSignUp,
     postCustomerInfo: configs.domain + configs.apiRoutes.home.postCustomerInfo,
     getInfoFilm: configs.domain + configs.apiRoutes.home.getInfoFilm, 
+    getListTicketRoom: configs.domain + configs.apiRoutes.home.getListTicketRoom
   };
 
   constructor(private _http: HttpClient) {}
@@ -83,6 +84,12 @@ export class HomeService {
       headers: header,
       responseType: "json"
     });
+    return result;
+  }
+  public getListTicketRoom(systemTheaterID: string): Observable<any[]>{
+    let result: any = this._http.get(this.API_URL.getListTicketRoom + systemTheaterID);
+    console.log(result);
+    console.log(systemTheaterID);
     return result;
   }
 }

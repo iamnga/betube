@@ -47,6 +47,6 @@ export const configs = {
     filmName: "&tenPhim=",
     systemTheaterID: "&maHeThongRap=",
     groupID: "&MaNhom=",
-    pageSetUp: "&soPhanTuTrenTrang=10&soTrang="
+    pageSetUp: "&soPhanTuTrenTrang=10&soTrang=",
   }
 };
