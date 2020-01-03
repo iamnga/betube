@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TicketComponent implements OnInit {
   public maLichChieu:string;
-  public detailLichChieu:any;
+  public danhSachGheNgoi:any[] = [];
   constructor(private activeRoute:ActivatedRoute,  private _homeService:HomeService) { }
 
   ngOnInit() {
@@ -18,11 +18,10 @@ export class TicketComponent implements OnInit {
         this.maLichChieu = result.malichchieu;
         this._homeService.getListTicketRoom(this.maLichChieu).subscribe(
           (kq)=>{
-            this.detailLichChieu = kq;
-            console.log(kq);
+            this.danhSachGheNgoi = kq.danhSachGhe;
+            console.log(this.danhSachGheNgoi);
           }
         )
-        console.log(result);
       }, (error) =>{
         console.log(error);
         

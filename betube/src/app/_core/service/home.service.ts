@@ -86,10 +86,10 @@ export class HomeService {
     });
     return result;
   }
-  public getListTicketRoom(systemTheaterID: string): Observable<any[]>{
+  public getListTicketRoom(systemTheaterID: string): Observable<any>{
     let result: any = this._http.get(this.API_URL.getListTicketRoom + systemTheaterID);
     console.log(result);
-    console.log(systemTheaterID);
+
     return result;
   }
 }

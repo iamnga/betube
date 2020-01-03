@@ -1,3 +1,5 @@
+import { ChairComponent } from './../chair/chair.component';
+import { ListChairComponent } from './../list-chair/list-chair.component';
 import { TicketComponent } from './../ticket/ticket.component';
 import { PipeModule } from './../../../_core/pipe/pipe.module';
 import { UserDetailComponent } from '../user-detail/user-detail.component';
@@ -29,7 +31,7 @@ const homeRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent, TicketComponent],
+  declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent, TicketComponent,ListChairComponent,ChairComponent],
   imports: [CommonModule, PipeModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
