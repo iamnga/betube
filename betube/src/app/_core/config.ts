@@ -33,9 +33,10 @@ export const configs = {
       film: {
         postAddFilm: "/api/QuanLyPhim/ThemPhim",
         deleteFilm: "/api/QuanLyPhim/XoaPhim?MaPhim=",
-        putUpdateFilm: "/api/QuanLyPhim/CapNhatPhim",
+        postUpdateFilm: "/api/QuanLyPhim/CapNhatPhim",
         postUploadImgFilm: "/api/QuanLyPhim/UploadHinhAnhPhim",
-        getListFilmPaginate: "/api/QuanLyPhim/LayDanhSachPhimPhanTrang?MaNhom="
+        getListFilmPaginate: "/api/QuanLyPhim/LayDanhSachPhimPhanTrang?MaNhom=",
+        getSearchFilm: "/api/QuanLyPhim/LayThongTinPhim?MaPhim="
       },
       showTimes: {
         postAddShowTime: "/api/QuanLyDatVe/TaoLichChieu"

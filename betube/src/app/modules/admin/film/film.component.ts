@@ -19,6 +19,8 @@ export class FilmComponent implements OnInit {
   isEdit = false;
   error: string;
   filmIdDelete: string;
+  imgFilm: any;
+  imgEdit: string;
 
   constructor(private adminService: AdminService, private router: Router) {}
 
@@ -50,11 +52,7 @@ export class FilmComponent implements OnInit {
         Validators.maxLength(100)
       ]),
       imgFilm: new FormControl(""),
-      description: new FormControl("", [
-        Validators.required,
-        Validators.minLength(1),
-        Validators.maxLength(500)
-      ]),
+      description: new FormControl("", [Validators.required]),
       premiereDate: new FormControl("", [
         Validators.required,
         Validators.minLength(1),
@@ -103,7 +101,6 @@ export class FilmComponent implements OnInit {
   }
 
   addFilm() {
-    console.log(this.addFilmForm);
     this.film.maPhim = this.addFilmForm.get("filmID").value;
     this.film.tenPhim = this.addFilmForm.get("filmName").value;
     this.film.biDanh = this.addFilmForm.get("slugFilm").value;
@@ -113,23 +110,18 @@ export class FilmComponent implements OnInit {
     this.film.ngayKhoiChieu = this.addFilmForm.get("premiereDate").value;
     this.film.danhGia = this.addFilmForm.get("rate").value;
     this.film.maNhom = configs.groupID;
-    console.log(this.film);
     let token = JSON.parse(localStorage.getItem("userAdmin"));
     this.adminService.postAddFilm(this.film, token.accessToken).subscribe(
       res => {
-        console.log(res);
         let frmData = new FormData();
-        frmData.append(
-          "File",
-          this.addFilmForm.get("imgFilm").value,
-          this.film.tenPhim + "gr10.jpg"
-        );
-        frmData.append("tenphim", this.film.tenPhim);
+        frmData.append("File", this.imgFilm, this.film.tenPhim + "gr10.jpg");
+        frmData.append("tenPhim", this.film.tenPhim);
+        frmData.append("maNhom", configs.groupID);
+
         this.adminService
           .postUploadImgFilm(frmData, token.accessToken)
           .subscribe(
             res => {
-              console.log(res);
               this.getListFilmPaginate(this.listFilm.currentPage);
               $(".close").click();
               $("#showAlertAddSuccess").click();
@@ -148,9 +140,8 @@ export class FilmComponent implements OnInit {
 
   onFileSelect(event) {
     if (event.target.files.length > 0) {
-      console.log(event);
       const file = event.target.files[0];
-      this.addFilmForm.get("imgFilm").setValue(file);
+      this.imgFilm = file;
     }
   }
 
@@ -164,16 +155,65 @@ export class FilmComponent implements OnInit {
       .deleteFilm(this.filmIdDelete, token.accessToken)
       .subscribe(
         res => {
-          // if (this.inputSearchUser != "") {
-          //   this.searchUser();
-          // } else {
-            this.getListFilmPaginate(this.listFilm.currentPage);
-          // }
+          this.getListFilmPaginate(this.listFilm.currentPage);
           $("#showAlertDeleteSuccess").click();
         },
         error => {
           console.log(error.error);
         }
       );
+  }
+
+  editFilm(filmID: any) {
+    this.addFilmForm.reset();
+    this.formTitle = "Chỉnh sửa thông tin phim";
+    this.isEdit = true;
+    this.adminService.getSearchFilm(filmID).subscribe(
+      res => {
+        this.addFilmForm.get("filmID").setValue(res.maPhim);
+        this.addFilmForm.get("filmName").setValue(res.tenPhim);
+        this.addFilmForm.get("slugFilm").setValue(res.biDanh);
+        this.addFilmForm.get("trailer").setValue(res.trailer);
+        this.imgEdit = res.hinhAnh;
+        this.addFilmForm.get("description").setValue(res.moTa);
+        this.addFilmForm.get("premiereDate").setValue(res.ngayKhoiChieu);
+        this.addFilmForm.get("rate").setValue(res.danhGia);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  confirmEdit() {
+    this.film.maPhim = this.addFilmForm.get("filmID").value;
+    this.film.tenPhim = this.addFilmForm.get("filmName").value;
+    this.film.biDanh = this.addFilmForm.get("slugFilm").value;
+    this.film.trailer = this.addFilmForm.get("trailer").value;
+    this.film.hinhAnh = this.imgEdit;
+    this.film.moTa = this.addFilmForm.get("description").value;
+    this.film.ngayKhoiChieu = this.getDate(
+      this.addFilmForm.get("premiereDate").value
+    );
+    this.film.danhGia = this.addFilmForm.get("rate").value;
+    this.film.maNhom = configs.groupID;
+    console.log(this.film);
+    let token = JSON.parse(localStorage.getItem("userAdmin"));
+    this.adminService.postUpdateFilm(this.film, token.accessToken).subscribe(
+      res => {
+        console.log(res);
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getDate(date: any) {
+    let year = date.substring(0,4);
+    let month = date.substring(5,7);
+    let day = date.substring(8,10);
+    date = day + "/" + month + "/" + year
+    return date;
   }
 }

@@ -29,7 +29,9 @@ export class AdminService {
     postAddFilm: configs.domain + configs.apiRoutes.admin.film.postAddFilm,
     postUploadImgFilm:
       configs.domain + configs.apiRoutes.admin.film.postUploadImgFilm,
-      deleteFilm: configs.domain + configs.apiRoutes.admin.film.deleteFilm
+    deleteFilm: configs.domain + configs.apiRoutes.admin.film.deleteFilm,
+    getSearchFilm: configs.domain + configs.apiRoutes.admin.film.getSearchFilm,
+    postUpdateFilm: configs.domain + configs.apiRoutes.admin.film.postUpdateFilm
   };
 
   responseType = "json";
@@ -37,11 +39,10 @@ export class AdminService {
 
   constructor(private _http: HttpClient) {}
 
+  // User API
   postAddUser(userInfo: any, token: string): Observable<any> {
     let result = this._http.post(this.API_URL.postAddUser, userInfo, {
       headers: this.createHeaderWithAuth(token),
-      
-      
       responseType: "json"
     });
     console.log(token);
@@ -87,6 +88,10 @@ export class AdminService {
     return result;
   }
 
+  // End User API
+
+  //  Film API
+
   getListFilmPaginate(pageNumber: any): Observable<any> {
     let result: any = this._http.get(
       this.API_URL.getListFilmPaginate + pageNumber
@@ -103,8 +108,9 @@ export class AdminService {
   }
 
   postUploadImgFilm(data: any, token: string): Observable<any> {
-    let result = this._http.post(this.API_URL.postAddFilm, data, {
-      headers: this.createHeaderWithAuthNotContentType(token)
+    let result = this._http.post(this.API_URL.postUploadImgFilm, data, {
+      headers: this.createHeaderWithAuthNotContentType(token),
+      responseType: "text"
     });
     return result;
   }
@@ -116,6 +122,21 @@ export class AdminService {
     });
     return result;
   }
+
+  getSearchFilm(filmID: any): Observable<any> {
+    let result: any = this._http.get(this.API_URL.getSearchFilm + filmID);
+    return result;
+  }
+
+  postUpdateFilm(filmInfo: any, token: string): Observable<any> {
+    let result: any = this._http.post(this.API_URL.postUpdateFilm, filmInfo, {
+      headers: this.createHeaderWithAuth(token),
+      responseType: "text"
+    });
+    return result;
+  }
+
+  // End Film API
 
   createHeaderWithAuth(token: string): HttpHeaders {
     return new HttpHeaders({
