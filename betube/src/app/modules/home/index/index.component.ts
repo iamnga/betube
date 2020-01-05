@@ -1,4 +1,4 @@
-import { Title } from '@angular/platform-browser';
+import { Title } from "@angular/platform-browser";
 import { Component, OnInit } from "@angular/core";
 import { HomeService } from "../../../_core/service/home.service";
 import { NgbCarouselConfig } from "@ng-bootstrap/ng-bootstrap";
@@ -14,7 +14,6 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ["./index.component.css"]
 })
 export class IndexComponent implements OnInit {
-  
   // List Data
   listFilms: any[] = [];
   listSystemTheaters: any[] = [];
@@ -40,8 +39,7 @@ export class IndexComponent implements OnInit {
     private _homeService: HomeService,
     config: NgbCarouselConfig,
     configRating: NgbRatingConfig,
-    private titleService:Title
-
+    private titleService: Title
   ) {
     this.titleService.setTitle("Be tube - Đặt vé phim nhanh nhất");
     //Cài đặt rating
@@ -70,7 +68,6 @@ export class IndexComponent implements OnInit {
         console.log(error.error);
       }
     );
-
   }
 
   // Lấy danh sách các cụm rạp sau khi chọn hệ thống rạp
@@ -95,7 +92,7 @@ export class IndexComponent implements OnInit {
         }
       );
     } else {
-      if(!this.isInitShowTime){
+      if (!this.isInitShowTime) {
         this.systemTheaterID = systemTheaterID;
         this._homeService.getListTheaters(systemTheaterID).subscribe(
           listTheaters => {
@@ -105,8 +102,7 @@ export class IndexComponent implements OnInit {
             console.log(error.error);
           }
         );
-      }
-      else{
+      } else {
         this.isInitShowTime = false;
         this.systemTheaterID = systemTheaterID;
         this._homeService.getListTheaters(systemTheaterID).subscribe(
@@ -119,7 +115,6 @@ export class IndexComponent implements OnInit {
           }
         );
       }
-      
     }
   }
 
@@ -151,24 +146,23 @@ export class IndexComponent implements OnInit {
           }
         );
     } else {
-      if(!this.isInitShowTime){
-      this.theaterID = theaterID;
-      this._homeService
-        .getListTheatersShowtimes(this.systemTheaterID)
-        .subscribe(
-          listTheatersShowtimes => {
-            let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
-            let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
-            if (hasShowTime) {
-              this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+      if (!this.isInitShowTime) {
+        this.theaterID = theaterID;
+        this._homeService
+          .getListTheatersShowtimes(this.systemTheaterID)
+          .subscribe(
+            listTheatersShowtimes => {
+              let listTheaters: any[] = listTheatersShowtimes[0].lstCumRap;
+              let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
+              if (hasShowTime) {
+                this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+              }
+            },
+            error => {
+              console.log(error.error);
             }
-          },
-          error => {
-            console.log(error.error);
-          }
-        );
-      }
-      else{
+          );
+      } else {
         this.isInitShowTime = false;
       }
     }
@@ -234,8 +228,12 @@ export class IndexComponent implements OnInit {
 
   //Resize lại carousel do hiển thị lại sau khi ẩn thì width của carousel = 0px
   resize() {
-    $("#pills-profile").css("display", "none");
+    $("#upcoming").css("display", "none");
     $("#upComing").slick("refresh");
-    $("#pills-profile").css("display", "block");
+    $("#upcoming").css("display", "block");
+  }
+
+  hideUpcoming() {
+    $("#upcoming").css("display", "none");
   }
 }

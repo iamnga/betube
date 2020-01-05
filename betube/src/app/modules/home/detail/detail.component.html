@@ -1,15 +1,14 @@
-<div class="container">
+<div class="container" *ngIf="filmDetail">
     <div class="container section single-movie">
         <div class="row">
             <div class="col-sm-7">
                 <h2>Synopsis</h2>
                 <div class="row">
                     <div class="col-sm-5">
-                        <img class="poster" [src]="detailFilm.hinhAnh" alt="">
+                        <img class="poster" [src]="filmDetail.hinhAnh" alt="">
                         <div class="share">
                             <a href="#">
-                                <i class="fab fa-facebook-square"
-                                    aria-hidden="true"></i>
+                                <i class="fab fa-facebook-square" aria-hidden="true"></i>
                             </a>
                             <a href="#">
                                 <i class="fab fa-twitter" aria-hidden="true"></i>
@@ -18,18 +17,17 @@
                                 <i class="fab fa-pinterest" aria-hidden="true"></i>
                             </a>
                             <a href="#">
-                                <i class="fab fa-google-plus"
-                                    aria-hidden="true"></i>
+                                <i class="fab fa-google-plus" aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
                     <div class="col-sm-7">
-                        <h3 class="no-underline">{{detailFilm.tenPhim}}</h3>
-                        <p>{{detailFilm.moTa}}</p>
+                        <h3 class="no-underline">{{filmDetail.tenPhim}}</h3>
+                        <p>{{filmDetail.moTa}}</p>
                         <ul class="movie-info">
                             <li><i>Director</i> Michael Bay</li>
                             <li><i>Starring</i> Mark Wahlberg, Anthony Hopkins</li>
-                            <li><i>Release date</i>{{detailFilm.ngayKhoiChieu}}</li>
+                            <li><i>Release date</i>{{filmDetail.ngayKhoiChieu}}</li>
                             <li><i>Running time</i> 114 mins</li>
                         </ul>
                     </div>
@@ -37,24 +35,23 @@
             </div>
             <div class="col-sm-4 col-sm-push-1">
                 <h2>Viewing times</h2>
-                <ul class="show-times">
-                   
-                    <li *ngFor="let lichchieu of detailFilm.lichChieu"><i> {{lichchieu.ngayChieuGioChieu | date :'dd/MM'}}</i><a [routerLink]="['/ticket', lichchieu.maLichChieu]"><span class="time past">{{lichchieu.ngayChieuGioChieu | date :'hh:mm'}}</span></a></li>
-                   
+                <ul class="show-times" *ngIf="filmDetail.lichChieu">
+                    <li *ngFor="let lichchieu of filmDetail.lichChieu"><i>
+                            {{lichchieu.ngayChieuGioChieu | date :'dd/MM'}}</i><a
+                            [routerLink]="['/ticket', lichchieu.maLichChieu]"><span
+                                class="time past">{{lichchieu.ngayChieuGioChieu | date :'hh:mm'}}</span></a></li>
                 </ul>
-                
-                    
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 <div class="dark">
     <div class="container section remove-bottom-padding">
         <div class="row comingSoon-slides singleGallery">
             <div class="col-sm-12 w100">
-                <iframe width="100%" height="600" [src]="TrailerChiTiet | safe" allow="autoplay;" allowfullscreen ></iframe>
+                <iframe width="100%" height="600" [src]="trailer | safe" allow="autoplay;" allowfullscreen></iframe>
             </div>
-            <!-- <div class="bg" [ngStyle]="{'background-image':'url(' + detailFilm.hinhAnh + ')'}"></div>     -->
+            <!-- <div class="bg" [ngStyle]="{'background-image':'url(' + filmDetail.hinhAnh + ')'}"></div>     -->
         </div>
     </div>
 </div>

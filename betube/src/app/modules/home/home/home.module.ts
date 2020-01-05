@@ -24,8 +24,8 @@ const homeRoutes: Routes = [
     { path: "about-us", component: AboutUsComponent }, 
     { path: "contact", component: ContactComponent },
     { path: "utility", component: UtilityComponent},
-    { path: "detail/:maphim", component: DetailComponent},
-    { path: "ticket/:malichchieu", component: TicketComponent},
+    { path: "detail/:filmID", component: DetailComponent},
+    { path: "ticket/:showTimeID", component: TicketComponent},
     { path: "user-detail/:taiKhoan", component: UserDetailComponent}]
   }
 ];

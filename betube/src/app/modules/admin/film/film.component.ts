@@ -23,7 +23,6 @@ export class FilmComponent implements OnInit {
   imgFilm: any;
   imgEdit: string;
   filmID: any;
-  showTime = new ShowTime();
   token = JSON.parse(localStorage.getItem("userAdmin"));
   accessToken = this.token.accessToken;
 
@@ -246,27 +245,6 @@ export class FilmComponent implements OnInit {
     let day = date.substring(8, 10);
     date = day + "/" + month + "/" + year;
     return date;
-  }
-
-  addShowTime() {
-    this.showTime.maPhim = this.filmID;
-    this.showTime.ngayChieuGioChieu = this.addShowTimeForm.get(
-      "showTime"
-    ).value;
-    this.showTime.maRap = this.addShowTimeForm.get("theaterID").value;
-    this.showTime.giaVe = this.addShowTimeForm.get("ticketPrice").value;
-
-    this.adminService
-      .postAddShowTime(this.showTime, this.accessToken)
-      .subscribe(
-        res => {
-          console.log(res);
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    console.log(this.showTime);
   }
 
   setFilmID(filmID: any) {

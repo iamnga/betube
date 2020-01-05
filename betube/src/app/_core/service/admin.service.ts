@@ -34,7 +34,8 @@ export class AdminService {
     postUpdateFilm:
       configs.domain + configs.apiRoutes.admin.film.postUpdateFilm,
     postAddShowTime:
-      configs.domain + configs.apiRoutes.admin.film.postAddShowTime
+      configs.domain + configs.apiRoutes.admin.film.postAddShowTime,
+    getListShowtimes: configs.domain + configs.apiRoutes.home.getListShowtimes
   };
 
   responseType = "json";
@@ -149,6 +150,13 @@ export class AdminService {
   }
 
   // End Film API
+
+  // Showtime API
+  getListShowtimes(filmID: string): Observable<any> {
+    let result: any = this._http.get(this.API_URL.getListShowtimes + filmID);
+    return result;
+  }
+  // End Showtime API
 
   createHeaderWithAuth(token: string): HttpHeaders {
     return new HttpHeaders({

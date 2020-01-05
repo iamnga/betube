@@ -1,4 +1,3 @@
-
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, config } from "rxjs";
@@ -10,14 +9,19 @@ export class HomeService {
   API_URL = {
     getListFilms:
       configs.domain + configs.apiRoutes.home.getListFilms + configs.groupID,
-    getListSystemTheaters: configs.domain + configs.apiRoutes.home.getListSystemTheaters,
+    getListSystemTheaters:
+      configs.domain + configs.apiRoutes.home.getListSystemTheaters,
     getListTheaters: configs.domain + configs.apiRoutes.home.getListTheaters,
-    getListTheatersShowtimes: configs.domain + configs.apiRoutes.home.getListTheatersShowtimes + configs.groupID,
+    getListTheatersShowtimes:
+      configs.domain +
+      configs.apiRoutes.home.getListTheatersShowtimes +
+      configs.groupID,
     postSignIn: configs.domain + configs.apiRoutes.home.postSignIn,
     postSignUp: configs.domain + configs.apiRoutes.home.postSignUp,
     postCustomerInfo: configs.domain + configs.apiRoutes.home.postCustomerInfo,
-    getInfoFilm: configs.domain + configs.apiRoutes.home.getInfoFilm, 
-    getListTicketRoom: configs.domain + configs.apiRoutes.home.getListTicketRoom
+    getInfoFilm: configs.domain + configs.apiRoutes.home.getInfoFilm,
+    getListTicketRoom:
+      configs.domain + configs.apiRoutes.home.getListTicketRoom
   };
 
   constructor(private _http: HttpClient) {}
@@ -66,19 +70,15 @@ export class HomeService {
       headers: header,
       responseType: "json"
     });
-    
+
     return result;
   }
 
   public getInfoFilm(fimlID: string): Observable<any> {
-    let result: any = this._http.get(this.API_URL.getInfoFilm + fimlID
-    );
-    console.log(fimlID);
-    console.log(result);
+    let result: any = this._http.get(this.API_URL.getInfoFilm + fimlID);
     return result;
-    
   }
-  public  postCustomerInfo(taiKhoan: string): Observable<any[]>{
+  public postCustomerInfo(taiKhoan: string): Observable<any[]> {
     let header = new HttpHeaders({ "Content-Type": "application/json" });
     let result: any = this._http.post(this.API_URL.postCustomerInfo, taiKhoan, {
       headers: header,
@@ -86,8 +86,10 @@ export class HomeService {
     });
     return result;
   }
-  public getListTicketRoom(systemTheaterID: string): Observable<any>{
-    let result: any = this._http.get(this.API_URL.getListTicketRoom + systemTheaterID);
+  public getListTicketRoom(systemTheaterID: string): Observable<any> {
+    let result: any = this._http.get(
+      this.API_URL.getListTicketRoom + systemTheaterID
+    );
     console.log(result);
 
     return result;
