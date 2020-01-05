@@ -11,7 +11,7 @@ import { HomeComponent } from "./home.component";
 import { Routes, RouterModule } from "@angular/router";
 import { IndexComponent } from "../index/index.component";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { SlickCarouselModule } from 'ngx-slick-carousel'; //Để các component con có thể sử dụng được thư viện cần phải import thư việc vào module trước 
+import { SlickCarouselModule } from 'ngx-slick-carousel'; //Để các component con có thể sử dụng được thư viện cần phải import thư viện vào module trước 
 import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from '@angular/forms';
 import { AboutUsComponent } from '../about-us/about-us.component';

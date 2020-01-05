@@ -7,6 +7,8 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { DataTablesModule } from "angular-datatables";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
 import { FilmComponent } from "./film/film.component";
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ShowTimeComponent } from "./show-time/show-time.component";
 
 const adminRoutes: Routes = [
   {
@@ -14,19 +16,26 @@ const adminRoutes: Routes = [
     component: AdminComponent,
     children: [
       { path: "user", component: UserComponent },
-      { path: "film", component: FilmComponent }
+      { path: "film", component: FilmComponent },
+      { path: "film/show-time/:id", component: ShowTimeComponent }
     ]
   }
 ];
 
 @NgModule({
-  declarations: [AdminComponent, UserComponent, FilmComponent],
+  declarations: [
+    AdminComponent,
+    UserComponent,
+    FilmComponent,
+    ShowTimeComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
     DataTablesModule,
     SweetAlert2Module,
+    NgbModule,
     RouterModule.forChild(adminRoutes)
   ]
 })

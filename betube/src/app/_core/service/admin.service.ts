@@ -31,7 +31,10 @@ export class AdminService {
       configs.domain + configs.apiRoutes.admin.film.postUploadImgFilm,
     deleteFilm: configs.domain + configs.apiRoutes.admin.film.deleteFilm,
     getSearchFilm: configs.domain + configs.apiRoutes.admin.film.getSearchFilm,
-    postUpdateFilm: configs.domain + configs.apiRoutes.admin.film.postUpdateFilm
+    postUpdateFilm:
+      configs.domain + configs.apiRoutes.admin.film.postUpdateFilm,
+    postAddShowTime:
+      configs.domain + configs.apiRoutes.admin.film.postAddShowTime
   };
 
   responseType = "json";
@@ -133,6 +136,15 @@ export class AdminService {
       headers: this.createHeaderWithAuth(token),
       responseType: "text"
     });
+    return result;
+  }
+
+  postAddShowTime(showTimeInfo: any, token: string): Observable<any> {
+    let result: any = this._http.post(
+      this.API_URL.postAddShowTime,
+      showTimeInfo,
+      { headers: this.createHeaderWithAuth(token), responseType: "text" }
+    );
     return result;
   }
 

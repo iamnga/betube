@@ -24,3 +24,10 @@ export class Film {
   public ngayKhoiChieu: string;
   public danhGia: string;
 }
+
+export class ShowTime {
+  public maPhim: string;
+  public ngayChieuGioChieu: string;
+  public maRap: string;
+  public giaVe: string;
+}

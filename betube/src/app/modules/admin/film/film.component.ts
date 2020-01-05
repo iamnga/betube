@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { AdminService } from "./../../../_core/service/admin.service";
-import { Film } from "../../../_core/model/master-model";
+import { Film, ShowTime } from "../../../_core/model/master-model";
 import { configs } from "../../../_core/config";
 import * as $ from "jquery";
 
@@ -15,12 +15,17 @@ export class FilmComponent implements OnInit {
   listFilm: any;
   film = new Film();
   addFilmForm: any;
+  addShowTimeForm: any;
   formTitle: string;
   isEdit = false;
   error: string;
   filmIdDelete: string;
   imgFilm: any;
   imgEdit: string;
+  filmID: any;
+  showTime = new ShowTime();
+  token = JSON.parse(localStorage.getItem("userAdmin"));
+  accessToken = this.token.accessToken;
 
   constructor(private adminService: AdminService, private router: Router) {}
 
@@ -63,6 +68,12 @@ export class FilmComponent implements OnInit {
         Validators.minLength(1),
         Validators.maxLength(2)
       ])
+    });
+
+    this.addShowTimeForm = new FormGroup({
+      showTime: new FormControl(""),
+      theaterID: new FormControl(""),
+      ticketPrice: new FormControl("")
     });
   }
 
@@ -110,8 +121,7 @@ export class FilmComponent implements OnInit {
     this.film.ngayKhoiChieu = this.addFilmForm.get("premiereDate").value;
     this.film.danhGia = this.addFilmForm.get("rate").value;
     this.film.maNhom = configs.groupID;
-    let token = JSON.parse(localStorage.getItem("userAdmin"));
-    this.adminService.postAddFilm(this.film, token.accessToken).subscribe(
+    this.adminService.postAddFilm(this.film, this.accessToken).subscribe(
       res => {
         let frmData = new FormData();
         frmData.append("File", this.imgFilm, this.film.tenPhim + "gr10.jpg");
@@ -119,7 +129,7 @@ export class FilmComponent implements OnInit {
         frmData.append("maNhom", configs.groupID);
 
         this.adminService
-          .postUploadImgFilm(frmData, token.accessToken)
+          .postUploadImgFilm(frmData, this.accessToken)
           .subscribe(
             res => {
               this.getListFilmPaginate(this.listFilm.currentPage);
@@ -150,18 +160,15 @@ export class FilmComponent implements OnInit {
   }
 
   deleteFilm() {
-    let token = JSON.parse(localStorage.getItem("userAdmin"));
-    this.adminService
-      .deleteFilm(this.filmIdDelete, token.accessToken)
-      .subscribe(
-        res => {
-          this.getListFilmPaginate(this.listFilm.currentPage);
-          $("#showAlertDeleteSuccess").click();
-        },
-        error => {
-          console.log(error.error);
-        }
-      );
+    this.adminService.deleteFilm(this.filmIdDelete, this.accessToken).subscribe(
+      res => {
+        this.getListFilmPaginate(this.listFilm.currentPage);
+        $("#showAlertDeleteSuccess").click();
+      },
+      error => {
+        console.log(error.error);
+      }
+    );
   }
 
   editFilm(filmID: any) {
@@ -198,9 +205,33 @@ export class FilmComponent implements OnInit {
     this.film.danhGia = this.addFilmForm.get("rate").value;
     this.film.maNhom = configs.groupID;
     console.log(this.film);
-    let token = JSON.parse(localStorage.getItem("userAdmin"));
-    this.adminService.postUpdateFilm(this.film, token.accessToken).subscribe(
+    this.adminService.postUpdateFilm(this.film, this.accessToken).subscribe(
       res => {
+        if (this.addFilmForm.get("imgFilm").value) {
+          console.log(this.imgFilm);
+          let frmData = new FormData();
+          frmData.append("File", this.imgFilm, this.film.tenPhim + "gr11.jpg");
+          frmData.append("tenPhim", this.film.tenPhim);
+          frmData.append("maNhom", configs.groupID);
+
+          this.adminService
+            .postUploadImgFilm(frmData, this.accessToken)
+            .subscribe(
+              res => {
+                this.getListFilmPaginate(this.listFilm.currentPage);
+                $(".close").click();
+                $("#showAlertAddSuccess").click();
+              },
+              error => {
+                console.log(error);
+                this.error = error.error;
+              }
+            );
+        } else {
+          this.getListFilmPaginate(this.listFilm.currentPage);
+          $(".close").click();
+          $("#showAlertAddSuccess").click();
+        }
         console.log(res);
       },
       error => {
@@ -210,10 +241,35 @@ export class FilmComponent implements OnInit {
   }
 
   getDate(date: any) {
-    let year = date.substring(0,4);
-    let month = date.substring(5,7);
-    let day = date.substring(8,10);
-    date = day + "/" + month + "/" + year
+    let year = date.substring(0, 4);
+    let month = date.substring(5, 7);
+    let day = date.substring(8, 10);
+    date = day + "/" + month + "/" + year;
     return date;
+  }
+
+  addShowTime() {
+    this.showTime.maPhim = this.filmID;
+    this.showTime.ngayChieuGioChieu = this.addShowTimeForm.get(
+      "showTime"
+    ).value;
+    this.showTime.maRap = this.addShowTimeForm.get("theaterID").value;
+    this.showTime.giaVe = this.addShowTimeForm.get("ticketPrice").value;
+
+    this.adminService
+      .postAddShowTime(this.showTime, this.accessToken)
+      .subscribe(
+        res => {
+          console.log(res);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    console.log(this.showTime);
+  }
+
+  setFilmID(filmID: any) {
+    this.filmID = filmID;
   }
 }
