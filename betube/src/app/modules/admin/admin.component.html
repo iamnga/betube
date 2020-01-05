@@ -1,17 +1,14 @@
 <div class="container min-vh-100">
-  <div class="row min-vh-100">
-    <div class="col-md-2">
-      <a routerLink=""
-        ><img id="logo" [src]="logo" class="img img-fluid mt-3"
-      /></a>
-      <h5 class="my-4 font-weight-bold">
+    <div class="row min-vh-100">
+        <div class="col-md-2">
+            <a routerLink=""><img id="logo" [src]="logo" class="img img-fluid mt-3" /></a>
+            <!-- <h5 class="my-4 font-weight-bold">
         <a href="" [ngClass]="{ 'text-dark': router.url != '/admin' }"
           ><i class="fas fa-home mr-2"></i> Trang chủ</a
         >
-      </h5>
-      <h5 class="mb-4 font-weight-bold">
-        <a routerLink="/admin/film" [ngClass]="{ 'text-dark': router.url != '/admin/film' }"
-          ><i class="fas fa-photo-video mr-2"></i> Phim</a
+      </h5> -->
+            <h5 class="my-4 font-weight-bold">
+                <a routerLink="/admin/film" [ngClass]="{ 'text-dark': router.url != '/admin/film' }"><i class="fas fa-photo-video mr-2"></i> Phim</a
         >
       </h5>
       <h5 class="mb-4 font-weight-bold">

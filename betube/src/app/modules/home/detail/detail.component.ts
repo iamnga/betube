@@ -8,9 +8,10 @@ import { ActivatedRoute } from "@angular/router";
   styleUrls: ["./detail.component.css"]
 })
 export class DetailComponent implements OnInit {
-  public filmID: string;
-  public filmDetail: any;
-  public trailer: string;
+filmID: string;
+filmDetail: any;
+trailer: string;
+isLoading = true;
   constructor(
     private route: ActivatedRoute,
     private _homeService: HomeService
@@ -23,6 +24,7 @@ export class DetailComponent implements OnInit {
         this.filmDetail = res;
         let trailer = this.filmDetail.trailer;
         this.trailer = trailer;
+        this.isLoading = false;
       });
     }
   }

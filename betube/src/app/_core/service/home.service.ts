@@ -21,7 +21,11 @@ export class HomeService {
     postCustomerInfo: configs.domain + configs.apiRoutes.home.postCustomerInfo,
     getInfoFilm: configs.domain + configs.apiRoutes.home.getInfoFilm,
     getListTicketRoom:
-      configs.domain + configs.apiRoutes.home.getListTicketRoom
+      configs.domain + configs.apiRoutes.home.getListTicketRoom,
+    postBookingTicket:
+      configs.domain + configs.apiRoutes.home.postBookingTicket,
+    putUpdateCustomerInfo:
+      configs.domain + configs.apiRoutes.home.putUpdateCustomerInfo
   };
 
   constructor(private _http: HttpClient) {}
@@ -78,20 +82,52 @@ export class HomeService {
     let result: any = this._http.get(this.API_URL.getInfoFilm + fimlID);
     return result;
   }
-  public postCustomerInfo(taiKhoan: string): Observable<any[]> {
-    let header = new HttpHeaders({ "Content-Type": "application/json" });
-    let result: any = this._http.post(this.API_URL.postCustomerInfo, taiKhoan, {
-      headers: header,
-      responseType: "json"
+  public postCustomerInfo(userName: string, token): Observable<any[]> {
+    let header = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
     });
+    let result: any = this._http.post(
+      this.API_URL.postCustomerInfo,
+      { taiKhoan: userName },
+      {
+        headers: header
+      }
+    );
     return result;
   }
   public getListTicketRoom(systemTheaterID: string): Observable<any> {
     let result: any = this._http.get(
       this.API_URL.getListTicketRoom + systemTheaterID
     );
-    console.log(result);
+    return result;
+  }
 
+  postBookingTicket(bookingInfo: any, token: string): Observable<any> {
+    let header = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    let result: any = this._http.post(
+      this.API_URL.postBookingTicket,
+      bookingInfo,
+      { headers: header, responseType: "text" }
+    );
+    return result;
+  }
+
+  putUpdateCustomerInfo(userInfo: any, token: string): Observable<any> {
+    let header = new HttpHeaders({
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    });
+    let result: any = this._http.put(
+      this.API_URL.putUpdateCustomerInfo,
+      userInfo,
+      {
+        headers: header
+      }
+    );
     return result;
   }
 }

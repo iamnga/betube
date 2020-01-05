@@ -31,3 +31,14 @@ export class ShowTime {
   public maRap: string;
   public giaVe: string;
 }
+
+export class BookingTicket {
+  public maLichChieu: string;
+  public danhSachVe: ListTicket[];
+  public taiKhoanNguoiDung: string;
+}
+
+export class ListTicket {
+  public maGhe: string;
+  public giaVe: number;
+}

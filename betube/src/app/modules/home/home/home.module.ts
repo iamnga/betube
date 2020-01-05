@@ -16,6 +16,8 @@ import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from '@angular/forms';
 import { AboutUsComponent } from '../about-us/about-us.component';
 import { ContactComponent } from '../contact/contact.component';
+import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+
 const homeRoutes: Routes = [
   {
     path: "",
@@ -26,13 +28,13 @@ const homeRoutes: Routes = [
     { path: "utility", component: UtilityComponent},
     { path: "detail/:filmID", component: DetailComponent},
     { path: "ticket/:showTimeID", component: TicketComponent},
-    { path: "user-detail/:taiKhoan", component: UserDetailComponent}]
+    { path: "user-detail/:userName", component: UserDetailComponent}]
   }
 ];
 
 @NgModule({
   declarations: [HomeComponent, IndexComponent, AboutUsComponent, ContactComponent, UtilityComponent, DetailComponent, UserDetailComponent, TicketComponent,ListChairComponent,ChairComponent],
-  imports: [CommonModule, PipeModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
+  imports: [SweetAlert2Module, CommonModule, PipeModule, NgbModule, SlickCarouselModule, FormsModule, ReactiveFormsModule, RouterModule.forChild(homeRoutes)],
   providers: []
 })
 export class HomeModule {}

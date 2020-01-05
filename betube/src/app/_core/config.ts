@@ -19,7 +19,8 @@ export const configs = {
       postSignIn: "/api/QuanLyNguoiDung/DangNhap",
       postCustomerInfo: "/api/QuanLyNguoiDung/ThongTinTaiKhoan",
       putUpdateCustomerInfo: "/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-      getInfoFilm: "/api/QuanLyPhim/LayThongTinPhim?MaPhim="
+      getInfoFilm: "/api/QuanLyPhim/LayThongTinPhim?MaPhim=",
+      postBookingTicket : "/api/QuanLyDatVe/DatVe"
     },
     admin: {
       user: {

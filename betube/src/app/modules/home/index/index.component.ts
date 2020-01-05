@@ -32,6 +32,7 @@ export class IndexComponent implements OnInit {
     sltTime: new FormControl("")
   });
 
+  showTimeID: any;
   systemTheaterID: string;
   theaterID: string;
   isInitShowTime: boolean = true;
@@ -52,6 +53,11 @@ export class IndexComponent implements OnInit {
     this._homeService.getListFilms().subscribe(
       listFilms => {
         this.listFilms = listFilms;
+        // $('.carousel').slick({
+        //   nextArrow: '<i class="fas fa-arrow-alt-circle-right"></i>',
+        //   prevArrow: '<i class="fas fa-arrow-alt-circle-left"></i>',
+        // // add the rest of your options here
+        // });
       },
       error => {
         console.log(error.error);
@@ -139,6 +145,7 @@ export class IndexComponent implements OnInit {
             let hasShowTime = listTheaters.find(x => x.maCumRap == theaterID);
             if (hasShowTime) {
               this.listFilmsOfTheater = hasShowTime.danhSachPhim;
+              console.log(this.listFilmsOfTheater);
             }
           },
           error => {
@@ -198,10 +205,13 @@ export class IndexComponent implements OnInit {
       this.listTime = listShowTimeOfFilm.filter(
         x => x.ngayChieuGioChieu.substring(0, 10) == date
       );
-
       this.listTime = this.listTime.map((x, index) => {
-        return x.ngayChieuGioChieu.substring(11, 16);
+        return {
+          time: x.ngayChieuGioChieu.substring(11, 16),
+          showTimeID: x.maLichChieu
+        };
       });
+      console.log(this.listTime);
     } else {
       this.listShowTimeOfFilm = this.listFilmsOfTheater.find(
         x => x.maPhim == date
@@ -210,6 +220,9 @@ export class IndexComponent implements OnInit {
         return x.ngayChieuGioChieu;
       });
     }
+  }
+  setShowTimeID(showTimeID: any) {
+    this.showTimeID = showTimeID;
   }
 
   //Image banner
@@ -220,20 +233,5 @@ export class IndexComponent implements OnInit {
   ];
 
   //Cài đặt Slick slider
-  slideConfig = { slidesToShow: 5, slidesToScroll: 5 };
-
-  elementIdList = {
-    upComing: "upComing"
-  };
-
-  //Resize lại carousel do hiển thị lại sau khi ẩn thì width của carousel = 0px
-  resize() {
-    $("#upcoming").css("display", "none");
-    $("#upComing").slick("refresh");
-    $("#upcoming").css("display", "block");
-  }
-
-  hideUpcoming() {
-    $("#upcoming").css("display", "none");
-  }
+  slideConfig = { slidesToShow: 5, slidesToScroll: 5, prevArrow: '<button style="position: absolute;top: 50%;left: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;" class="prev-arrow"><i class="fas fa-chevron-left fa-2x"></i></button>',nextArrow: '<button style="position: absolute;top: 50%;right: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;" class="prev-arrow"><i class="fas fa-chevron-right fa-2x"></i></button>'};
 }

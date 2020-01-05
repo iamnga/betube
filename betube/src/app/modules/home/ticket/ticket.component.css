@@ -1,0 +1,36 @@
+.seat,
+.vip-seat,
+.seat-booked {
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.vip-seat {
+    background-color: #007bff;
+}
+
+.seat {
+    background-color: #3e515d;
+}
+
+.seat-booked {
+    background-color: #dddddd;
+}
+
+.loading {
+    min-height: 100%;
+    text-align: center;
+    position: relative;
+}
+
+.logo {
+    max-width: 200px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%);
+}

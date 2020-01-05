@@ -1,16 +1,58 @@
 <!-- <app-list-chair [dsGhe]="listChair" ></app-list-chair> -->
-
-<div class="container">
-    <div *ngIf="listChair" class="d-flex justify-content-center">
-        <div class="col-md-8">
-            <h5 class="text-center my-3">Ghế thường</h5>
-            <ng-container *ngFor="let chair of listNormalChair; let i = index">
-                <button type="button" class="btn btn-primary btn-sm m-1"><i class="fas fa-couch"></i></button>
-            </ng-container>
-            <h5 class="text-center my-3">Ghế VIP</h5>
-            <ng-container *ngFor="let chair of listVIPChair; let i = index">
-                <button type="button" class="btn btn-info btn-sm m-1"><i class="fas fa-couch"></i></button>
-            </ng-container>
+<div class="container" *ngIf="!isLoading">
+    <div *ngIf="listSeat">
+        <div class="row">
+            <div class="col-md-8 mt-3 bg-white rounded">
+                <h5 class="text-center my-3">Ghế thường</h5>
+                <ng-container *ngFor="let seat of listNormalSeat; let i = index">
+                    <span (click)="booking($event, seat)" [ngClass]="{'seat':!seat.daDat, 'seat-booked': seat.daDat}" id="{{ seat.maGhe }}">
+                    </span>
+                </ng-container>
+                <h5 class="text-center my-3">Ghế VIP</h5>
+                <ng-container *ngFor="let seat of listVIPSeat; let i = index">
+                    <span (click)="booking($event, seat)" [ngClass]="{'vip-seat':!seat.daDat, 'seat-booked': seat.daDat}" id="{{ seat.maGhe }}"></span>
+                </ng-container>
+            </div>
+            <div class="col-md-4">
+                <div class="booking-detail bg-white rounded my-3 p-3">
+                    <h1 class="text-danger">
+                        {{ totalAmount.toLocaleString() }} <u class="text-danger">đ</u>
+                    </h1>
+                    <hr />
+                    <div *ngIf="filmInfo">
+                        <h4 class="font-weight-bold">{{ filmInfo.tenPhim }}</h4>
+                        <h6>{{ filmInfo.tenCumRap }}</h6>
+                        <h6>{{ filmInfo.ngayChieu }} {{ filmInfo.gioChieu }}</h6>
+                    </div>
+                    <hr />
+                    <h4>Ghế</h4>
+                    <ng-container *ngFor="let ticket of listTicket">
+                        <span class="badge badge-success mr-2">{{ ticket.maGhe }}</span>
+                    </ng-container>
+                    <hr />
+                    <h4 class="font-weight-bold">Hình thức thanh toán</h4>
+                    <div class="custom-control custom-radio">
+                        <input type="radio" id="customRadio1" name="payMethod" class="custom-control-input" value="momo" />
+                        <label class="custom-control-label" for="customRadio1">Momo</label>
+                    </div>
+                    <div class="custom-control custom-radio mt-2">
+                        <input type="radio" id="customRadio2" name="payMethod" class="custom-control-input" value="atm" />
+                        <label class="custom-control-label" for="customRadio2">Thẻ ATM nội địa</label>
+                    </div>
+                    <div class="custom-control custom-radio mt-2">
+                        <input type="radio" id="customRadio3" name="payMethod" class="custom-control-input" value="inter" />
+                        <label class="custom-control-label" for="customRadio3">Thẻ Visa/Master/JCB</label>
+                    </div>
+                    <button class="btn btn-primary btn-block mt-3" (click)="bookingTicket()" [disabled]="listTicket.length < 1">Đặt vé</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<div class="loading" *ngIf="isLoading">
+    <i class="fas fa-spinner fa-spin fa-3x mb-2 mt-5"></i>
+    <h5>Đang tải...</h5>
+</div>
+
+<!-- Hiển thị thông báo sau khi đặt vé thành công -->
+<button id="showAlertAddSuccess" class="d-none" [swal]="['Thật tuyệt vời!', 'Bạn đã đặt vé thành công', 'success']"></button>
