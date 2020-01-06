@@ -27,10 +27,11 @@
     position: relative;
 }
 
-.logo {
-    max-width: 200px;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%);
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #3e515d;
 }

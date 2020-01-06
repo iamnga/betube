@@ -228,5 +228,5 @@ export class IndexComponent implements OnInit {
   ];
 
   //Cài đặt Slick slider
-  slideConfig = { slidesToShow: 5, slidesToScroll: 5, prevArrow: '<button style="position: absolute;top: 50%;left: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;" class="prev-arrow"><i class="fas fa-chevron-left fa-2x"></i></button>',nextArrow: '<button style="position: absolute;top: 50%;right: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;" class="prev-arrow"><i class="fas fa-chevron-right fa-2x"></i></button>'};
+  slideConfig = { slidesToShow: 5, slidesToScroll: 5, prevArrow: '<button style="position: absolute;top: 50%;left: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-left fa-2x"></i></button>',nextArrow: '<button style="position: absolute;top: 50%;right: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-right fa-2x"></i></button>'};
 }
