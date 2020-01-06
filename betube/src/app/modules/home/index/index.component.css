@@ -9,14 +9,14 @@
 }
 
 .film-img {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
+    /* border-top-left-radius: 5px;
+    border-top-right-radius: 5px; */
     max-height: 280px;
     min-height: 280px;
 }
 
 .film {
-    border-radius: 5px;
+    /* border-radius: 5px; */
     background-color: white;
     position: relative;
 }

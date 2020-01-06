@@ -53,11 +53,6 @@ export class IndexComponent implements OnInit {
     this._homeService.getListFilms().subscribe(
       listFilms => {
         this.listFilms = listFilms;
-        // $('.carousel').slick({
-        //   nextArrow: '<i class="fas fa-arrow-alt-circle-right"></i>',
-        //   prevArrow: '<i class="fas fa-arrow-alt-circle-left"></i>',
-        // // add the rest of your options here
-        // });
       },
       error => {
         console.log(error.error);

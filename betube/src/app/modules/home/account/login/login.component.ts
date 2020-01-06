@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
           this.router.navigate(["/"]);
         } else {
           localStorage.setItem("userAdmin", JSON.stringify(res));
-          this.router.navigate(["/admin"]);
+          this.router.navigate(["/admin/film"]);
         }
       },
       error => {

@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
   ],
   providers: [],
   bootstrap: [AppComponent]

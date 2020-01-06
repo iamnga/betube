@@ -92,53 +92,57 @@
                 </div>
                 <div class="sign-up-form text-left bg-white">
                     <form [formGroup]="addFilmForm">
-                        <div class="form-group">
-                            <label for="">Mã phim</label>
-                            <!-- Nếu class 'is-invalid' được sử dụng thì class 'invalid-feedback' cũng sẽ hiển thị theo, phần này bootstrap đã hỗ trợ sẵn -->
-                            <input [readonly]="isEdit" type="text" class="form-control" formControlName="filmID" [ngClass]="{
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="">Mã phim</label>
+                                <!-- Nếu class 'is-invalid' được sử dụng thì class 'invalid-feedback' cũng sẽ hiển thị theo, phần này bootstrap đã hỗ trợ sẵn -->
+                                <input [readonly]="isEdit" type="text" class="form-control" formControlName="filmID" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('filmID').touched ||
                       addFilmForm.get('filmID').dirty) &&
                     addFilmForm.get('filmID').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Mã phim không hợp lệ
+                                <div class="invalid-feedback">
+                                    Mã phim không hợp lệ
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Tên phim</label>
-                            <input type="text" class="form-control" formControlName="filmName" [ngClass]="{
+                            <div class="form-group col-md-6">
+                                <label for="">Tên phim</label>
+                                <input type="text" class="form-control" formControlName="filmName" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('filmName').touched ||
                       addFilmForm.get('filmName').dirty) &&
                     addFilmForm.get('filmName').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Tên phim không hợp lệ
+                                <div class="invalid-feedback">
+                                    Tên phim không hợp lệ
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Bí danh</label>
-                            <input type="text" class="form-control" formControlName="slugFilm" [ngClass]="{
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="">Bí danh</label>
+                                <input type="text" class="form-control" formControlName="slugFilm" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('slugFilm').touched ||
                       addFilmForm.get('slugFilm').dirty) &&
                     addFilmForm.get('slugFilm').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Bí danh không hợp lệ
+                                <div class="invalid-feedback">
+                                    Bí danh không hợp lệ
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Trailer</label>
-                            <input type="text" class="form-control" formControlName="trailer" [ngClass]="{
+                            <div class="form-group col-md-6">
+                                <label for="">Trailer</label>
+                                <input type="text" class="form-control" formControlName="trailer" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('trailer').touched ||
                       addFilmForm.get('trailer').dirty) &&
                     addFilmForm.get('trailer').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Trailer không hợp lệ
+                                <div class="invalid-feedback">
+                                    Trailer không hợp lệ
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -156,41 +160,42 @@
                         </div>
                         <div class="form-group">
                             <label for="">Mô tả</label>
-                            <input type="text" class="form-control" formControlName="description" [ngClass]="{
+                            <textarea rows="5" class="form-control" formControlName="description" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('description').touched ||
                       addFilmForm.get('description').dirty) &&
                     addFilmForm.get('description').invalid
-                }" />
+                }"></textarea>
                             <div class="invalid-feedback">
                                 Mô tả không hợp lệ
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="">Ngày khởi chiếu</label>
-                            <input type="text" class="form-control" formControlName="premiereDate" [ngClass]="{
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="">Ngày khởi chiếu</label>
+                                <input type="text" class="form-control" formControlName="premiereDate" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('premiereDate').touched ||
                       addFilmForm.get('premiereDate').dirty) &&
                     addFilmForm.get('premiereDate').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Ngày khởi chiếu không hợp lệ
+                                <div class="invalid-feedback">
+                                    Ngày khởi chiếu không hợp lệ
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Đánh giá</label>
-                            <input type="text" class="form-control" formControlName="rate" [ngClass]="{
+                            <div class="form-group col-md-6">
+                                <label for="">Đánh giá</label>
+                                <input type="text" class="form-control" formControlName="rate" [ngClass]="{
                   'is-invalid':
                     (addFilmForm.get('rate').touched ||
                       addFilmForm.get('rate').dirty) &&
                     addFilmForm.get('rate').invalid
                 }" />
-                            <div class="invalid-feedback">
-                                Đánh giá không hợp lệ
+                                <div class="invalid-feedback">
+                                    Đánh giá không hợp lệ
+                                </div>
                             </div>
                         </div>
-
                         <!-- Nếu các field của Form không hợp lệ thì disable nút Lưu thông tin đi -->
                         <button *ngIf="!isEdit" type="submit" [disabled]="addFilmForm.invalid" class="btn btn-success w-100" (click)="addFilm()">
               Lưu thông tin
