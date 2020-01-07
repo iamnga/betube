@@ -9,15 +9,24 @@ import { Router } from "@angular/router";
 })
 export class AdminComponent implements OnInit {
   logo = "assets/home/images/Logo.png";
+  isMobile = false;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
+    let user = JSON.parse(localStorage.getItem("userAdmin"));
+    if (!user) {
+      this.router.navigate(["/account/login"]);
+    }
+    let width = window.innerWidth;
+    if (width < 576) {
+      this.isMobile = true;
+    }
     $("body").css("background-color", "white");
   }
 
   signOutAdmin() {
-    // localStorage.removeItem("userAdmin");
-    this.router.navigate['/admin/user'];
+    localStorage.removeItem("userAdmin");
+    this.router.navigate["/admin/user"];
   }
 }

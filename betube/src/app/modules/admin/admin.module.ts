@@ -17,7 +17,8 @@ const adminRoutes: Routes = [
     children: [
       { path: "user", component: UserComponent },
       { path: "film", component: FilmComponent },
-      { path: "film/show-time/:id", component: ShowTimeComponent }
+      { path: "film/show-time/:id", component: ShowTimeComponent },
+      { path: "", redirectTo: "/admin/film" },
     ]
   }
 ];

@@ -25,10 +25,15 @@ export class FilmComponent implements OnInit {
   filmID: any;
   token = JSON.parse(localStorage.getItem("userAdmin"));
   accessToken = this.token.accessToken;
+  isMobile = false;
 
   constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit() {
+    let width = window.innerWidth;
+    if (width < 576) {
+      this.isMobile = true;
+    }
     this.createForm();
     this.getListFilmPaginate(1);
   }

@@ -23,9 +23,14 @@ export class UserComponent implements OnInit {
   isEdit = false;
   searchResult: any;
   inputSearchUser = "";
+  isMobile = false;
   constructor(private adminService: AdminService, private router: Router) {}
 
   ngOnInit() {
+    let width = window.innerWidth;
+    if (width < 576) {
+      this.isMobile = true;
+    }
     this.createForm();
     this.getListUserPaginate(1);
   }

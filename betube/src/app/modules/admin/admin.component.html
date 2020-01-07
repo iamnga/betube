@@ -1,4 +1,4 @@
-<div class="container min-vh-100">
+<div class="container min-vh-100" *ngIf="!isMobile">
     <div class="row min-vh-100">
         <div class="col-md-2">
             <a routerLink=""><img id="logo" [src]="logo" class="img img-fluid mt-3" /></a>
@@ -43,5 +43,33 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
+
+
+<div class="container pt-3" *ngIf="isMobile">
+  <div class="fixed-bottom bg-white nav-mobile">
+    <div class="row">
+      <div class="col-3 text-center p-0"><a routerLink="" class="text-dark"><i class="fas fa-home"></i></a></div>
+        <div class="col-3 text-center p-0"><a routerLink="/admin/film" [ngClass]="{ 'text-dark': router.url != '/admin/film' }"><i class="fas fa-photo-video mr-2"></i></a
+        ></div>
+      <div class="col-3 text-center p-0"><a
+        routerLink="/admin/user"
+        [ngClass]="{ 'text-dark': router.url != '/admin/user' }"
+        ><i class="fas fa-users mr-2"></i></a
+      ></div>
+      <div class="col-3 text-center p-0"><a
+        routerLink="/account/login"
+        class="text-dark"
+        (click)="signOutAdmin()"
+        ><i class="fas fa-sign-out-alt mr-2"></i></a
+      ></div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+  <div class="footer text-secondary small text-center py-3">
+    © 2019 Betube All rights reserved.
   </div>
 </div>

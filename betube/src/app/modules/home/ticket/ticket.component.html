@@ -2,17 +2,7 @@
 <div class="container" *ngIf="!isLoading">
     <div *ngIf="listSeat">
         <div class="row">
-            <div class="col-md-8 mt-3 bg-white rounded">
-                <!-- <h5 class="text-center my-3">Ghế thường</h5>
-                <ng-container *ngFor="let seat of listNormalSeat; let i = index">
-                    <span (click)="booking($event, seat)" [ngClass]="{'seat':!seat.daDat, 'seat-booked': seat.daDat}" id="{{ seat.maGhe }}">
-                    </span>
-                </ng-container>
-                <h5 class="text-center my-3">Ghế VIP</h5>
-                <ng-container *ngFor="let seat of listVIPSeat; let i = index">
-                    <span (click)="booking($event, seat)" [ngClass]="{'vip-seat':!seat.daDat, 'seat-booked': seat.daDat}" id="{{ seat.maGhe }}"></span>
-                </ng-container> -->
-
+            <div class="col-md-8 mt-3 bg-white rounded" *ngIf="!isMobile">
                 <div class="d-flex justify-content-center">
                     <div>
                         <h5 class="text-center my-3">Màn hình</h5>
@@ -27,7 +17,24 @@
                         <span class="seat m-0"></span><span class="ml-1 mr-3">Ghế thường</span><span class="vip-seat m-0"></span><span class="ml-1 mr-3">Ghế VIP</span><span class="seat-booked m-0"></span><span class="ml-1 mr-3">Ghế đã đặt</span>
                     </div>
                 </div>
-
+            </div>
+            <div class="col-md-8 mt-3" *ngIf="isMobile">
+                <div class="bg-white rounded">
+                    <div class="d-flex justify-content-center">
+                        <div>
+                            <h5 class="text-center my-3">Màn hình</h5>
+                            <ng-container *ngFor="let seat of listSeat; let i = index">
+                                <span (click)="booking($event, seat)" [ngClass]="{'vip-seat-mobile':!seat.daDat && seat.loaiGhe == 'Vip', 'seat-booked-mobile': seat.daDat, 'seat-mobile' : !seat.daDat && seat.loaiGhe == 'Thuong'}" id="{{ seat.maGhe }}"></span>
+                                <br *ngIf="(i+1) %16 == 0">
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center my-3 pb-3">
+                        <div>
+                            <span class="seat-mobile m-0"></span><span class="ml-1 mr-3">Ghế thường</span><span class="vip-seat-mobile m-0"></span><span class="ml-1 mr-3">Ghế VIP</span><span class="seat-booked-mobile m-0"></span><span class="ml-1 mr-3">Ghế đã đặt</span>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <div class="booking-detail bg-white rounded my-3 p-3">

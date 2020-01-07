@@ -9,15 +9,29 @@
     cursor: pointer;
 }
 
-.vip-seat {
+.seat-mobile,
+.vip-seat-mobile,
+.seat-booked-mobile {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.vip-seat,
+.vip-seat-mobile {
     background-color: #007bff;
 }
 
-.seat {
+.seat,
+.seat-mobile {
     background-color: #3e515d;
 }
 
-.seat-booked {
+.seat-booked,
+.seat-booked-mobile {
     background-color: #dddddd;
 }
 

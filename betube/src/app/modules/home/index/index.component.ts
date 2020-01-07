@@ -8,12 +8,14 @@ import * as $ from "jquery";
 import "slick-carousel";
 import { FormControl, FormGroup } from "@angular/forms";
 
+
 @Component({
   selector: "app-index",
   templateUrl: "./index.component.html",
   styleUrls: ["./index.component.css"]
 })
 export class IndexComponent implements OnInit {
+  
   // List Data
   listFilms: any[] = [];
   listSystemTheaters: any[] = [];
@@ -36,6 +38,8 @@ export class IndexComponent implements OnInit {
   systemTheaterID: string;
   theaterID: string;
   isInitShowTime: boolean = true;
+  isMobile = false;
+
   constructor(
     private _homeService: HomeService,
     config: NgbCarouselConfig,
@@ -49,6 +53,10 @@ export class IndexComponent implements OnInit {
   }
 
   ngOnInit() {
+    let width = window.innerWidth;
+    if(width < 576){
+      this.isMobile = true;
+    }
     //Lấy lên danh sách film theo nhóm GP01 để show lên mục phim đang chiếu - sắp chiếu
     this._homeService.getListFilms().subscribe(
       listFilms => {
@@ -229,4 +237,5 @@ export class IndexComponent implements OnInit {
 
   //Cài đặt Slick slider
   slideConfig = { slidesToShow: 5, slidesToScroll: 5, prevArrow: '<button style="position: absolute;top: 50%;left: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-left fa-2x"></i></button>',nextArrow: '<button style="position: absolute;top: 50%;right: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-right fa-2x"></i></button>'};
+  slideConfigMobile = { slidesToShow: 1, slidesToScroll: 1, prevArrow: '<button style="position: absolute;top: 50%;left: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-left fa-2x"></i></button>',nextArrow: '<button style="position: absolute;top: 50%;right: -3%;border: none;background: none;transform: translate(0, -50%);outline: none;color: #3e515d;" class="prev-arrow"><i class="fas fa-chevron-right fa-2x"></i></button>'};
 }

@@ -19,16 +19,21 @@ export class TicketComponent implements OnInit {
   totalAmount = 0;
   filmInfo: any;
   isLoading = true;
+  isMobile = false;
   constructor(
     private activeRoute: ActivatedRoute,
     private _homeService: HomeService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    let width = window.innerWidth;
+    if (width < 576) {
+      this.isMobile = true;
+    }
     let user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
-      this.router.navigate(['/account/login']);
+      this.router.navigate(["/account/login"]);
     }
     this.activeRoute.params.subscribe(
       result => {
