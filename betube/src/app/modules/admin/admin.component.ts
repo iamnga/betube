@@ -11,7 +11,7 @@ export class AdminComponent implements OnInit {
   logo = "assets/home/images/Logo.png";
   isMobile = false;
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   ngOnInit() {
     let user = JSON.parse(localStorage.getItem("userAdmin"));

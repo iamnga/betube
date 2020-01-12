@@ -96,9 +96,6 @@
         </button>
             </div>
             <div class="modal-body">
-                <div class="alert alert-danger mb-3" role="alert" *ngIf="error">
-                    {{ error }}
-                </div>
                 <div class="sign-up-form text-left bg-white">
                     <ng-container *ngFor="let seat of listSeat;let last = last">
                         <h6 class="font-weight-bold">{{seat.tenHeThongRap}}</h6>
@@ -106,7 +103,6 @@
                         <h6>Ghế: {{seat.tenGhe}}</h6>
                         <hr *ngIf="!last">
                     </ng-container>
-
                 </div>
             </div>
         </div>

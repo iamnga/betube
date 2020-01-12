@@ -7,11 +7,13 @@ import { HttpClientModule } from "@angular/common/http";
 import { AccountModule } from "./modules/home/account/account.module";
 import { AdminModule } from "./modules/admin/admin.module";
 import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 
 const appRoutes: Routes = [
-  { path: "", loadChildren: () => HomeModule },
-  { path: "account", loadChildren: () => AccountModule },
-  { path: "admin", loadChildren: () => AdminModule }
+  { path: "", loadChildren: "./modules/home/home/home.module#HomeModule" },
+  { path: "account", loadChildren: "./modules/home/account/account.module#AccountModule" },
+  { path: "admin", loadChildren: "./modules/admin/admin.module#AdminModule" }
 ];
 
 @NgModule({
@@ -20,9 +22,9 @@ const appRoutes: Routes = [
     BrowserModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' })
+    RouterModule.forRoot(appRoutes, { scrollPositionRestoration: "enabled", useHash: true })
   ],
-  providers: [],
+  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
